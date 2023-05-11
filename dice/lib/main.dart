@@ -2,10 +2,21 @@ import 'package:flutter/material.dart';
 
 void main() {
   runApp(
-    MaterialApp(
+    const MaterialApp(
       home: Scaffold(
         // backgroundColor: Color.fromARGB(255, 57, 133, 90),
-        body: Container(
+        body: GradientContainer()
+      ),
+    ),
+  );
+}
+
+class GradientContainer extends StatelessWidget {
+  const GradientContainer({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
           decoration: const BoxDecoration(
             gradient: LinearGradient(colors: [
               Color.fromARGB(255, 100, 175, 121),
@@ -19,8 +30,6 @@ void main() {
               style: TextStyle(fontSize: 30, color: Colors.white),
             ),
           ),
-        ),
-      ),
-    ),
-  );
+        );
+  }
 }
