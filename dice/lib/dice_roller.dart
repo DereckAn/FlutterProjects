@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:math';
 
 import 'style_text.dart';
 
@@ -10,36 +11,36 @@ class RolerDice extends StatefulWidget {
 }
 
 class _RolerDiceState extends State<RolerDice> {
-
   var activeImage = 'assets/images/dice-1.png';
 
   void rolDice() {
+    var randomNumber = Random().nextInt(6) + 1;
     setState(() {
-      activeImage = 'assets/images/dice-2.png';
+      activeImage = 'assets/images/dice-$randomNumber.png';
     });
-    
+
     // print('cambio de imagen');
   }
 
   @override
   Widget build(BuildContext context) {
     return Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Image.asset(
-              activeImage,
-              width: 200,
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            TextButton(
-                onPressed: rolDice,
-                style: TextButton.styleFrom(
-                    // padding: const EdgeInsets.only(top:20),
-                    foregroundColor: Colors.white,
-                    textStyle: const TextStyle(fontSize: 30)),
-                child: const StyleText("Donde estan?"))
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Image.asset(
+          activeImage,
+          width: 200,
+        ),
+        const SizedBox(
+          height: 20,
+        ),
+        TextButton(
+            onPressed: rolDice,
+            style: TextButton.styleFrom(
+                // padding: const EdgeInsets.only(top:20),
+                foregroundColor: Colors.white,
+                textStyle: const TextStyle(fontSize: 30)),
+            child: const StyleText("Donde estan?"))
       ],
     );
   }
