@@ -3,6 +3,9 @@ import 'dart:math';
 
 import 'style_text.dart';
 
+final randomizer = Random();
+
+
 class RolerDice extends StatefulWidget {
   const RolerDice({super.key});
 
@@ -14,7 +17,7 @@ class _RolerDiceState extends State<RolerDice> {
   var activeImage = 'assets/images/dice-1.png';
 
   void rolDice() {
-    var randomNumber = Random().nextInt(6) + 1;
+    var randomNumber = randomizer.nextInt(6) + 1;
     setState(() {
       activeImage = 'assets/images/dice-$randomNumber.png';
     });
@@ -40,7 +43,7 @@ class _RolerDiceState extends State<RolerDice> {
                 // padding: const EdgeInsets.only(top:20),
                 foregroundColor: Colors.white,
                 textStyle: const TextStyle(fontSize: 30)),
-            child: const StyleText("Donde estan?"))
+            child: const StyleText("Random Dice")),
       ],
     );
   }
