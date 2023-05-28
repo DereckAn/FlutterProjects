@@ -58,7 +58,7 @@ class Menu extends StatelessWidget {
               ),
             ),
             onPressed: () {
-              Navigator.pushNamed(context, '/juego');
+              Navigator.pushNamed(context, '/records');
             },
             child: const Text(
               'Records',

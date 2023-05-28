@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'screens/home.dart';
 import 'screens/playing.dart';
+import 'screens/records.dart';
 
 void main() {
   runApp(const MyApp());
@@ -23,6 +24,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => const MyHomePage(title: 'Flutter Demo Home Page'),
         '/juego': (context) => const Playing(),
+        '/records':(context) => const Records(),
       },
     );
   }

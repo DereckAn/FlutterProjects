@@ -5,6 +5,12 @@ class Records extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Text("Records");
+    return  Scaffold(
+      appBar: AppBar(
+        title: const Text('Records'),
+      ),
+      body: const Center(
+        child: Text('Records'),
+      ),);
   }
 }

@@ -2,6 +2,8 @@ import 'package:color_game/components/two_buttons.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 
+import '../components/end_game.dart';
+
 final random = Random();
 const colorMap = {
   'red': Colors.red,
@@ -32,25 +34,23 @@ class _PlayingState extends State<Playing> {
   void generateRandomColor() {
     setState(() {
       _backgroundColor = colorMap[keys[random.nextInt(keys.length)]]!;
-      // print(_backgroundColor);
       _stringColor = keys[random.nextInt(keys.length)];
-      // print(_stringColor);
     });
   }
 
-  bool checkAnswer(bool isCorrect) {
-    if ((checkIsSame() && isCorrect) || (!checkIsSame() && !isCorrect)) {
+  void checkAnswer(bool isCorrect) {
+    if ((checkIsSame() == isCorrect)) {
       setState(() {
         score++;
         generateRandomColor();
       });
-      return true;
+      // return true;
     } else {
       setState(() {
         score--;
         generateRandomColor();
       });
-      return false;
+      // return false;
     }
   }
 
@@ -66,6 +66,8 @@ class _PlayingState extends State<Playing> {
     return Scaffold(
       backgroundColor: _backgroundColor,
       appBar: AppBar(
+        actions: const [
+          EndGame(),],
         backgroundColor: Colors.amber,
         title: Text(
           'Score: $score',
