@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class TwoButtons extends StatelessWidget {
-  const TwoButtons(this._changeBackgroundColor, {super.key});
-  final VoidCallback _changeBackgroundColor;
+  final void Function(bool) onButtonPressed;
+  const TwoButtons(this.onButtonPressed, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -27,10 +27,7 @@ class TwoButtons extends StatelessWidget {
                   borderRadius: BorderRadius.circular(8),
                 ),
               ),
-              onPressed: () {
-                // print('red');
-                _changeBackgroundColor();
-              },
+              onPressed: () => onButtonPressed(false),
               icon: const Icon(Icons.close, size: 50, color: Colors.red),
             ),
           ),
@@ -50,11 +47,9 @@ class TwoButtons extends StatelessWidget {
                   borderRadius: BorderRadius.circular(8),
                 ),
               ),
-              onPressed: () {
-                // print('green');
-                _changeBackgroundColor();
-              },
-              icon: const Icon(Icons.check, size: 50, color: Colors.green),
+              onPressed: () => onButtonPressed(true),
+              icon:
+                  const Icon(Icons.check, size: 50, color: Colors.green),
             ),
           ),
         ),

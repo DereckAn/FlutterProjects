@@ -35,17 +35,22 @@ class _PlayingState extends State<Playing> {
       // print(_backgroundColor);
       _stringColor = keys[random.nextInt(keys.length)];
       // print(_stringColor);
-      score++;
     });
   }
 
-  void checkAnswer(bool isCorrect) {
-    if ((_backgroundColor == colorMap[_stringColor] && isCorrect) ||
-        (_backgroundColor != colorMap[_stringColor] && !isCorrect)) {
+  bool checkAnswer(bool isCorrect) {
+    if ((checkIsSame() && isCorrect) || (!checkIsSame() && !isCorrect)) {
       setState(() {
         score++;
         generateRandomColor();
       });
+      return true;
+    } else {
+      setState(() {
+        score--;
+        generateRandomColor();
+      });
+      return false;
     }
   }
 
@@ -54,7 +59,7 @@ class _PlayingState extends State<Playing> {
   }
 
   Color _backgroundColor = Colors.pink;
-  String _stringColor = 'Ready?';
+  String _stringColor = 'pink';
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +85,10 @@ class _PlayingState extends State<Playing> {
               ),
             ),
           ),
-          Expanded(flex: 2, child: TwoButtons(generateRandomColor)),
+          Expanded(
+            flex: 2,
+            child: TwoButtons(checkAnswer),
+          ),
           const SizedBox(
             height: 20,
           ),
