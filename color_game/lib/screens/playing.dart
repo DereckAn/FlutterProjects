@@ -2,6 +2,7 @@ import 'package:color_game/components/two_buttons.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 
+final random = Random();
 const colorMap = {
   'red': Colors.red,
   'green': Colors.green,
@@ -15,14 +16,8 @@ const colorMap = {
   'brown': Colors.brown,
   'grey': Colors.grey,
 };
-
-final random = Random();
-
+final keys = colorMap.keys.toList();
 late int score;
-
-
-
-
 
 class Playing extends StatefulWidget {
   const Playing({super.key});
@@ -32,22 +27,30 @@ class Playing extends StatefulWidget {
 }
 
 class _PlayingState extends State<Playing> {
-  void _changeBackgroundColor() {
-    final keys = colorMap.keys.toList();
-    final randomKey = keys[random.nextInt(keys.length)];
-    final randomKey2 = keys[random.nextInt(keys.length)];
-    final randomColor = colorMap[randomKey];
+  int score = 0;
 
-    print(_areEquals(randomKey, randomKey2));
-
+  void generateRandomColor() {
     setState(() {
-      _backgroundColor = randomColor!;
-      _stringColor = randomKey2;
+      _backgroundColor = colorMap[keys[random.nextInt(keys.length)]]!;
+      // print(_backgroundColor);
+      _stringColor = keys[random.nextInt(keys.length)];
+      // print(_stringColor);
+      score++;
     });
   }
 
-  bool _areEquals(String key1, String key2) {
-    return key1 == key2;
+  void checkAnswer(bool isCorrect) {
+    if ((_backgroundColor == colorMap[_stringColor] && isCorrect) ||
+        (_backgroundColor != colorMap[_stringColor] && !isCorrect)) {
+      setState(() {
+        score++;
+        generateRandomColor();
+      });
+    }
+  }
+
+  bool checkIsSame() {
+    return _backgroundColor == colorMap[_stringColor];
   }
 
   Color _backgroundColor = Colors.pink;
@@ -59,24 +62,25 @@ class _PlayingState extends State<Playing> {
       backgroundColor: _backgroundColor,
       appBar: AppBar(
         backgroundColor: Colors.amber,
-        title: const Text(
-          'Score: ',
+        title: Text(
+          'Score: $score',
         ),
         centerTitle: true,
       ),
       body: Column(
-        // crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         mainAxisSize: MainAxisSize.max,
         children: [
           Expanded(
-              flex: 2,
-              child: Center(
-                  child: Text(
+            flex: 2,
+            child: Center(
+              child: Text(
                 _stringColor,
                 style: const TextStyle(fontSize: 50),
-              ))),
-          Expanded(flex: 2, child: TwoButtons(_changeBackgroundColor)),
+              ),
+            ),
+          ),
+          Expanded(flex: 2, child: TwoButtons(generateRandomColor)),
           const SizedBox(
             height: 20,
           ),

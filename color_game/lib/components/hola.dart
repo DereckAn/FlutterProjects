@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'dart:math';
 
 void main() {
-  runApp(ColorGame());
+  runApp(const ColorGame());
 }
 
 class ColorGame extends StatefulWidget {
+  const ColorGame({super.key});
+
   @override
   _ColorGameState createState() => _ColorGameState();
 }
@@ -23,7 +25,7 @@ class _ColorGameState extends State<ColorGame> {
     super.initState();
     score = 0;
     generateRandomColor();
-    timer = Timer.periodic(Duration(seconds: 2), (Timer t) {
+    timer = Timer.periodic(const Duration(seconds: 2), (Timer t) {
       generateRandomColor();
     });
   }
@@ -56,16 +58,16 @@ class _ColorGameState extends State<ColorGame> {
       title: 'Color Game',
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Color Game'),
+          title: const Text('Color Game'),
         ),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
               'Score: $score',
-              style: TextStyle(fontSize: 24),
+              style: const TextStyle(fontSize: 24),
             ),
-            SizedBox(height: 30),
+            const SizedBox(height: 30),
             Container(
               width: 200,
               height: 200,
@@ -73,21 +75,21 @@ class _ColorGameState extends State<ColorGame> {
               child: Center(
                 child: Text(
                   currentText,
-                  style: TextStyle(fontSize: 24, color: Colors.white),
+                  style: const TextStyle(fontSize: 24, color: Colors.white),
                 ),
               ),
             ),
-            SizedBox(height: 30),
+            const SizedBox(height: 30),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 ElevatedButton(
                   onPressed: () => checkAnswer(true),
-                  child: Text('Correcto'),
+                  child: const Text('Correcto'),
                 ),
                 ElevatedButton(
                   onPressed: () => checkAnswer(false),
-                  child: Text('Incorrecto'),
+                  child: const Text('Incorrecto'),
                 ),
               ],
             ),
