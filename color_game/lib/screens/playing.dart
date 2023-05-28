@@ -2,35 +2,27 @@ import 'package:color_game/components/two_buttons.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 
-final colors = [
-  Colors.red,
-  Colors.pink,
-  Colors.purple,
-  Colors.blue,
-  Colors.green,
-  Colors.yellow,
-  Colors.orange,
-  Colors.brown,
-  Colors.grey,
-  Colors.black,
-  Colors.white,
-];
-
-final colors2 = [
-  'red',
-  'pink',
-  'purple',
-  'blue',
-  'green',
-  'yellow',
-  'orange',
-  'brown',
-  'grey',
-  'black',
-  'white',
-];
+const colorMap = {
+  'red': Colors.red,
+  'green': Colors.green,
+  'blue': Colors.blue,
+  'purple': Colors.purple,
+  'yellow': Colors.yellow,
+  'black': Colors.black,
+  'white': Colors.white,
+  'pink': Colors.pink,
+  'orange': Colors.orange,
+  'brown': Colors.brown,
+  'grey': Colors.grey,
+};
 
 final random = Random();
+
+late int score;
+
+
+
+
 
 class Playing extends StatefulWidget {
   const Playing({super.key});
@@ -41,12 +33,21 @@ class Playing extends StatefulWidget {
 
 class _PlayingState extends State<Playing> {
   void _changeBackgroundColor() {
-    final randomColor = colors[random.nextInt(colors.length)];
-    final stringColor = colors2[random.nextInt(colors2.length)];
+    final keys = colorMap.keys.toList();
+    final randomKey = keys[random.nextInt(keys.length)];
+    final randomKey2 = keys[random.nextInt(keys.length)];
+    final randomColor = colorMap[randomKey];
+
+    print(_areEquals(randomKey, randomKey2));
+
     setState(() {
-      _backgroundColor = randomColor;
-      _stringColor = stringColor;
+      _backgroundColor = randomColor!;
+      _stringColor = randomKey2;
     });
+  }
+
+  bool _areEquals(String key1, String key2) {
+    return key1 == key2;
   }
 
   Color _backgroundColor = Colors.pink;
@@ -59,7 +60,7 @@ class _PlayingState extends State<Playing> {
       appBar: AppBar(
         backgroundColor: Colors.amber,
         title: const Text(
-          'Playing',
+          'Score: ',
         ),
         centerTitle: true,
       ),

@@ -27,7 +27,10 @@ class TwoButtons extends StatelessWidget {
                   borderRadius: BorderRadius.circular(8),
                 ),
               ),
-              onPressed: _changeBackgroundColor,
+              onPressed: () {
+                // print('red');
+                _changeBackgroundColor();
+              },
               icon: const Icon(Icons.close, size: 50, color: Colors.red),
             ),
           ),
@@ -47,7 +50,10 @@ class TwoButtons extends StatelessWidget {
                   borderRadius: BorderRadius.circular(8),
                 ),
               ),
-              onPressed: _changeBackgroundColor,
+              onPressed: () {
+                // print('green');
+                _changeBackgroundColor();
+              },
               icon: const Icon(Icons.check, size: 50, color: Colors.green),
             ),
           ),
