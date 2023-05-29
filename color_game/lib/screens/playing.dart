@@ -31,20 +31,19 @@ class Playing extends StatefulWidget {
 }
 
 class _PlayingState extends State<Playing> {
-
   Color _backgroundColor = Colors.pink;
   String _stringColor = 'pink';
   int score = 0;
   late Timer _timer;
-  late int _secondRemaining = 10;
+  late int _secondRemaining = 2;
   late bool _isGameOver = false;
-
 
   @override
   void initState() {
     super.initState();
     _startTimer();
   }
+
   void generateRandomColor() {
     setState(() {
       _backgroundColor = colorMap[keys[random.nextInt(keys.length)]]!;
@@ -57,6 +56,7 @@ class _PlayingState extends State<Playing> {
       setState(() {
         score++;
         generateRandomColor();
+        _secondRemaining = 2;
       });
       // return true;
     } else {
@@ -70,11 +70,11 @@ class _PlayingState extends State<Playing> {
   bool checkIsSame() {
     return _backgroundColor == colorMap[_stringColor];
   }
-  
+
   void _startTimer() {
     _timer = Timer.periodic(
-      const Duration(seconds: 1),
-      ( Timer timer) {
+      const Duration(milliseconds:  600),
+      (Timer timer) {
         if (_secondRemaining == 0) {
           _timer.cancel();
           setState(() {
@@ -100,31 +100,44 @@ class _PlayingState extends State<Playing> {
         ),
         centerTitle: true,
       ),
-      body:_isGameOver ? 
-          EndGame(score) : Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          Expanded(
-            flex: 2,
-            child: Center(
-              child: Text(
-                '$_stringColor $_secondRemaining',
-                style: const TextStyle(fontSize: 50),
-              ),
+      body: _isGameOver
+          ? EndGame(score)
+          : Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Expanded(
+                  flex: 2,
+                  child: Center(
+                    child: Stack(
+                      fit: StackFit.expand,
+                      children: [
+                        CircularProgressIndicator(
+                          value: 1 - _secondRemaining / 2,
+                          strokeWidth: 5,
+                          backgroundColor: _backgroundColor,
+                          valueColor:
+                              const AlwaysStoppedAnimation<Color>(Color.fromARGB(255, 76, 187, 12)),
+                        ),
+                        Center(
+                          child: Text(
+                            '$_stringColor $_secondRemaining',
+                            style: const TextStyle(fontSize: 50),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Expanded(
+                  flex: 2,
+                  child: TwoButtons(checkAnswer),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+              ],
             ),
-          ),
-          Expanded(
-            flex: 2,
-            child: TwoButtons(checkAnswer),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-        ],
-      ),
     );
   }
 }
-
-

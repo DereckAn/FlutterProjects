@@ -15,7 +15,7 @@ class TwoButtons extends StatelessWidget {
         Align(
           alignment: Alignment.bottomRight,
           child: SizedBox(
-            height: highh / 15,
+            height: highh / 10,
             width: widtt / 2,
             child: IconButton(
               style: ElevatedButton.styleFrom(
@@ -35,7 +35,7 @@ class TwoButtons extends StatelessWidget {
         Align(
           alignment: Alignment.bottomLeft,
           child: SizedBox(
-            height: highh / 15,
+            height: highh / 10,
             width: widtt / 2,
             child: IconButton(
               style: ElevatedButton.styleFrom(
