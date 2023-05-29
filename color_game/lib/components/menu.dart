@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'button.dart';
+
 class Menu extends StatelessWidget {
   const Menu({super.key});
 
@@ -23,28 +25,7 @@ class Menu extends StatelessWidget {
         SizedBox(
           height: highh / 10,
         ),
-        SizedBox(
-          width: widtt / 1.5,
-          height: highh / 17,
-          child: ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: const Color.fromARGB(255, 66, 190, 165),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
-              ),
-            ),
-            onPressed: () {
-              Navigator.pushNamed(context, '/juego');
-            },
-            child: const Text(
-              'START',
-              style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w900,
-                  fontSize: 16),
-            ),
-          ),
-        ),
+        const ButtonG( 'START', '/juego'),
         SizedBox(
           height: highh / 60,
         ),

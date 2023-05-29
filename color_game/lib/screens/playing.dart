@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:color_game/components/two_buttons.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
@@ -29,8 +31,20 @@ class Playing extends StatefulWidget {
 }
 
 class _PlayingState extends State<Playing> {
-  int score = 0;
 
+  Color _backgroundColor = Colors.pink;
+  String _stringColor = 'pink';
+  int score = 0;
+  late Timer _timer;
+  late int _secondRemaining = 10;
+  late bool _isGameOver = false;
+
+
+  @override
+  void initState() {
+    super.initState();
+    _startTimer();
+  }
   void generateRandomColor() {
     setState(() {
       _backgroundColor = colorMap[keys[random.nextInt(keys.length)]]!;
@@ -47,8 +61,7 @@ class _PlayingState extends State<Playing> {
       // return true;
     } else {
       setState(() {
-        score--;
-        generateRandomColor();
+        _isGameOver = true;
       });
       // return false;
     }
@@ -57,24 +70,38 @@ class _PlayingState extends State<Playing> {
   bool checkIsSame() {
     return _backgroundColor == colorMap[_stringColor];
   }
-
-  Color _backgroundColor = Colors.pink;
-  String _stringColor = 'pink';
+  
+  void _startTimer() {
+    _timer = Timer.periodic(
+      const Duration(seconds: 1),
+      ( Timer timer) {
+        if (_secondRemaining == 0) {
+          _timer.cancel();
+          setState(() {
+            _isGameOver = true;
+          });
+        } else {
+          setState(() {
+            _secondRemaining--;
+          });
+        }
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: _backgroundColor,
       appBar: AppBar(
-        actions: const [
-          EndGame(),],
         backgroundColor: Colors.amber,
         title: Text(
           'Score: $score',
         ),
         centerTitle: true,
       ),
-      body: Column(
+      body:_isGameOver ? 
+          EndGame(score) : Column(
         mainAxisAlignment: MainAxisAlignment.center,
         mainAxisSize: MainAxisSize.max,
         children: [
@@ -82,7 +109,7 @@ class _PlayingState extends State<Playing> {
             flex: 2,
             child: Center(
               child: Text(
-                _stringColor,
+                '$_stringColor $_secondRemaining',
                 style: const TextStyle(fontSize: 50),
               ),
             ),
@@ -99,3 +126,5 @@ class _PlayingState extends State<Playing> {
     );
   }
 }
+
+

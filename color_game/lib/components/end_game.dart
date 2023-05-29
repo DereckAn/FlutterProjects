@@ -1,40 +1,49 @@
 import 'package:flutter/material.dart';
 
+import 'button.dart';
+
 class EndGame extends StatelessWidget {
-  const EndGame({super.key});
+  const EndGame(this.lastScore,{super.key});
+  final int lastScore;
 
   @override
   Widget build(BuildContext context) {
-    return IconButton(
-            icon: const Icon(Icons.more_vert),
-            onPressed: () {
-                showModalBottomSheet(backgroundColor: Colors.grey[500],
-                    context: context,
-                    builder: (context) {
-                        return Column(
+    return  Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text(
+                  'GAME OVER',
+                  style: TextStyle(fontSize: 40),
+                ),
+                Text(
+                  'SCORE: $lastScore',
+                  style: const TextStyle(fontSize: 40),
+                ),
+              ],
+            ),
+          ),
+          const Expanded(
+            child: Column( 
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ButtonG('RESTART', '/juego'),
+                SizedBox(
+                  height: 25,),
+                ButtonG('MENU', '/'),
+                SizedBox(
+                  height: 15,),
+                ButtonG('RECORDS', '/records'),
+              ],
+            ),
+          ),
 
-                            mainAxisSize: MainAxisSize.max,
-                            children: <Widget>[
-                                ListTile(
-                                    leading: Icon(Icons.music_note),
-                                    title: Text('Música'),
-                                    onTap: () => {}
-                                ),
-                                ListTile(
-                                    leading: Icon(Icons.photo_album),
-                                    title: Text('Fotos'),
-                                    onTap: () => {}
-                                ),
-                                ListTile(
-                                    leading: Icon(Icons.videocam),
-                                    title: Text('Video'),
-                                    onTap: () => {}
-                                ),
-                            ],
-                        );
-                    }
-                );
-            },
-        );
+        ],
+      ),
+    );
   }
 }
