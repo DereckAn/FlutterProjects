@@ -21,6 +21,7 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Image.asset(
                 'assets/images/pato.png',
                 width: 300,
+                // color: Colors.white,
               ),
             ),
           ),
@@ -33,9 +34,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top:50.0),
-                  child: ElevatedButton(
+                  child: ElevatedButton.icon(
                     onPressed: () {},
-                    child: const Text('Start'),
+                    icon: const Icon(Icons.play_arrow),
+                    label: const Text('Start'),
                   ),
                 ),
               ],
