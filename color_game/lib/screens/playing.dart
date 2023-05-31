@@ -48,6 +48,8 @@ class _PlayingState extends State<Playing> {
     setState(() {
       _backgroundColor = colorMap[keys[random.nextInt(keys.length)]]!;
       _stringColor = keys[random.nextInt(keys.length)];
+      debugPrint("BackgroundColor: $_backgroundColor");
+      debugPrint("StringColor: $_stringColor");
     });
   }
 
@@ -73,12 +75,12 @@ class _PlayingState extends State<Playing> {
 
   void _startTimer() {
     _timer = Timer.periodic(
-      const Duration(milliseconds:  600),
+      const Duration(milliseconds: 600),
       (Timer timer) {
         if (_secondRemaining == 0) {
           _timer.cancel();
           setState(() {
-            _isGameOver = true;
+            // _isGameOver = true;
           });
         } else {
           setState(() {
@@ -116,12 +118,12 @@ class _PlayingState extends State<Playing> {
                           value: 1 - _secondRemaining / 2,
                           strokeWidth: 5,
                           backgroundColor: _backgroundColor,
-                          valueColor:
-                              const AlwaysStoppedAnimation<Color>(Color.fromARGB(255, 76, 187, 12)),
+                          valueColor: const AlwaysStoppedAnimation<Color>(
+                              Color.fromARGB(255, 76, 187, 12)),
                         ),
                         Center(
                           child: Text(
-                            '$_stringColor $_secondRemaining',
+                            _stringColor,
                             style: const TextStyle(fontSize: 50),
                           ),
                         ),
