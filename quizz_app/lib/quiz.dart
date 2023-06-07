@@ -11,29 +11,37 @@ class Quiz extends StatefulWidget {
 }
 
 class _QuizState extends State<Quiz> {
-  Widget? activeSreen ;
+  var activeScreen2 =
+      "start-screen"; // Este metodo es para eliminar el inistate
 
-  @override
-  void initState() {
-    super.initState();
-    activeSreen = MyHomePage(switchScreen);
-  }
+  Widget? activeSreen;
 
-  void switchScreen(){
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   activeSreen = MyHomePage(switchScreen);
+  // }
+
+  void switchScreen() {
     setState(() {
-      activeSreen = const Questions();
+      // activeSreen = const Questions();
+      activeScreen2 = 'questions-screen';
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    var anotherMethod = activeScreen2 == 'start-screen' //esto se llama "turnary expresion"
+          ? MyHomePage(switchScreen)
+          : const Questions();
+
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: activeSreen ,
+      home: anotherMethod,
     );
   }
 }
