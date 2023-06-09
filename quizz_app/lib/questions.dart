@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quizz_app/data/dummy_questions.dart';
 
 import 'models/answer_button.dart';
 
@@ -10,20 +11,25 @@ class Questions extends StatefulWidget {
 }
 
 class _QuestionsState extends State<Questions> {
+  final currentQuestion = questionss[0];
+
   @override
   Widget build(BuildContext context) {
-    return   SizedBox(
+    return SizedBox(
       width: double.infinity,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Text('The questions will go here'), 
-          const SizedBox(height: 20),
-         AnswerButton('1', (){}),
-         AnswerButton('2', (){}),
-         AnswerButton('3', (){}),
-         AnswerButton('4', (){}),
+      child: Container(
+        margin: const EdgeInsets.all(40),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(currentQuestion.question, textAlign: TextAlign.center,),
+            const SizedBox(height: 20),
+            ...currentQuestion.answers.map((answer) {
+              return AnswerButton(answer, () {});
+            }),
           ],
+        ),
       ),
     );
   }
