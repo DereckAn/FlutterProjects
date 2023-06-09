@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:quizz_app/data/dummy_questions.dart';
 import 'package:quizz_app/questions.dart';
+import 'package:quizz_app/results_screen.dart';
 
 import 'home.dart';
 
@@ -11,11 +13,12 @@ class Quiz extends StatefulWidget {
 }
 
 class _QuizState extends State<Quiz> {
+  List<String> selectedAnswer = [];
+
   var activeScreen2 =
       "start-screen"; // Este metodo es para eliminar el inistate
 
-  Widget? activeSreen;
-
+  // Widget? activeSreen;
   // @override
   // void initState() {
   //   super.initState();
@@ -29,12 +32,23 @@ class _QuizState extends State<Quiz> {
     });
   }
 
+  void chooseAnswer(String answer) {
+    selectedAnswer.add(answer);
+    if (selectedAnswer.length == questionss.length) {
+      setState(() {
+        // selectedAnswer = [];
+        activeScreen2 = 'results-screen';
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    var anotherMethod =
-        activeScreen2 == 'start-screen' //esto se llama "turnary expresion"
-            ? MyHomePage(switchScreen)
-            : const Questions();
+    var anotherMethod = activeScreen2 == 'start-screen'
+        ? MyHomePage(switchScreen)
+        : (activeScreen2 == 'questions-screen'
+            ? Questions(chooseAnswer)
+            : Results(selectedAnswer));
 
     return MaterialApp(
         title: 'Flutter Demo',
