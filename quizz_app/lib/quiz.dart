@@ -31,17 +31,20 @@ class _QuizState extends State<Quiz> {
 
   @override
   Widget build(BuildContext context) {
-    var anotherMethod = activeScreen2 == 'start-screen' //esto se llama "turnary expresion"
-          ? MyHomePage(switchScreen)
-          : const Questions();
+    var anotherMethod =
+        activeScreen2 == 'start-screen' //esto se llama "turnary expresion"
+            ? MyHomePage(switchScreen)
+            : const Questions();
 
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: anotherMethod,
-    );
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          useMaterial3: true,
+        ),
+        home: Scaffold(
+          backgroundColor: const Color.fromARGB(255, 73, 148, 161),
+          body: anotherMethod,
+        ));
   }
 }
