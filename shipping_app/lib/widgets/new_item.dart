@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:shipping_app/models/category.dart';
+import 'package:shipping_app/models/grocery_item.dart';
 
 import '../data/categories.dart';
 
@@ -11,9 +13,19 @@ class NewItem extends StatefulWidget {
 
 class _NewItemState extends State<NewItem> {
   final _formKey = GlobalKey<FormState>();
+  var enterQuantity = 1;
+  var _selectedCategory = categories[Categories.fruit]!;
+  var _enteredName = '';
 
-  void _savaItem(){
-    _formKey.currentState!.validate();
+  void _savaItem() {
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
+      Navigator.of(context).pop(GroceryItem(
+          id: DateTime.now().toString(),
+          name: _enteredName,
+          quantity: enterQuantity,
+          category: _selectedCategory));
+    }
   }
 
   @override
@@ -40,6 +52,9 @@ class _NewItemState extends State<NewItem> {
                   }
                   return null;
                 },
+                onSaved: (value) {
+                  _enteredName = value!;
+                },
               ),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
@@ -49,17 +64,21 @@ class _NewItemState extends State<NewItem> {
                       validator: (value) {
                         if (value == null ||
                             value.isEmpty ||
-                            int.tryParse(value) == null || // Esto es para convertir el string en int 
-                            int.tryParse(value)! <= 0 ) {
+                            int.tryParse(value) ==
+                                null || // Esto es para convertir el string en int
+                            int.tryParse(value)! <= 0) {
                           return 'Must be a number greater than 0';
                         }
                         return null;
                       },
-                      initialValue: '1',
+                      initialValue: enterQuantity.toString(),
                       keyboardType: TextInputType.number,
                       decoration: const InputDecoration(
                         label: Text('Quantity'),
                       ),
+                      onSaved: (value) {
+                        enterQuantity = int.parse(value!);
+                      },
                     ),
                   ),
                   const SizedBox(
@@ -67,6 +86,7 @@ class _NewItemState extends State<NewItem> {
                   ),
                   Expanded(
                     child: DropdownButtonFormField(
+                      value: _selectedCategory,
                       items: [
                         for (final category in categories.entries)
                           DropdownMenuItem(
@@ -86,7 +106,11 @@ class _NewItemState extends State<NewItem> {
                             ),
                           ),
                       ],
-                      onChanged: (value) {},
+                      onChanged: (value) {
+                        setState(() {
+                          _selectedCategory = value!;
+                        });
+                      },
                     ),
                   ),
                 ],
