@@ -8,7 +8,7 @@ class Results extends StatelessWidget {
   final List<String> chooseAnswer;
   final void Function() onReset;
 
-  List<Map<String, Object>> getSummary() {
+  List<Map<String, Object>> get summary {
     final List<Map<String, Object>> summary = [];
 
     for (var i = 0; i < chooseAnswer.length; i++) {
@@ -25,7 +25,7 @@ class Results extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final numtotalQuestions = questionss.length;
-    final sumaryData = getSummary();
+    final sumaryData = summary;
     final correctQuestions = sumaryData.where((data) {
       return data['correct_answer'] == data['user_answer'];
     }).length;
@@ -49,7 +49,7 @@ class Results extends StatelessWidget {
                     fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center),
             const SizedBox(height: 40),
-            QuestionsSummary(getSummary()),
+            QuestionsSummary(summary),
             const SizedBox(height: 40),
             TextButton.icon(
               label: const Text('Try again'),
