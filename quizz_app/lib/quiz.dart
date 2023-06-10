@@ -25,6 +25,13 @@ class _QuizState extends State<Quiz> {
   //   activeSreen = MyHomePage(switchScreen);
   // }
 
+  void reatartQuiz() {
+    setState(() {
+      selectedAnswer = [];
+      activeScreen2 = 'start-screen';
+    });
+  }
+
   void switchScreen() {
     setState(() {
       // activeSreen = const Questions();
@@ -48,7 +55,7 @@ class _QuizState extends State<Quiz> {
         ? MyHomePage(switchScreen)
         : (activeScreen2 == 'questions-screen'
             ? Questions(chooseAnswer)
-            : Results(selectedAnswer));
+            : Results(selectedAnswer, reatartQuiz));
 
     return MaterialApp(
         title: 'Flutter Demo',
