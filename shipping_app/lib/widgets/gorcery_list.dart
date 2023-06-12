@@ -16,6 +16,7 @@ class GroceryList extends StatefulWidget {
 
 class _GroceryListState extends State<GroceryList> {
   List<GroceryItem> _groceryItems = [];
+  String? error;
 
   var isLoading = true;
 
@@ -28,14 +29,29 @@ class _GroceryListState extends State<GroceryList> {
   void _loadItems() async {
     final url = Uri.https(
         'hola-2da75-default-rtdb.firebaseio.com', 'shopping-list.json');
+    try {
+      final response = await http.get(url);
+      if (response.statusCode >= 400) {
+      setState(() {
+        error = "Error 400 or more";
+      });
+    }
 
-    final response = await http.get(url);
-    // print(response.body);
+    if (response.body == 'null') {
+      setState(() {
+        isLoading = false;
+      });
+      return;
+    }
+
     final Map<String, dynamic> listData = json.decode(response.body);
     final List<GroceryItem> loadedItems = [];
 
-    for (final item in listData.entries){
-      final category = categories.entries.firstWhere((element) => element.value.title == item.value['category']).value;
+    for (final item in listData.entries) {
+      final category = categories.entries
+          .firstWhere(
+              (element) => element.value.title == item.value['category'])
+          .value;
 
       loadedItems.add(GroceryItem(
         id: item.key,
@@ -49,6 +65,16 @@ class _GroceryListState extends State<GroceryList> {
       _groceryItems = loadedItems;
       isLoading = false;
     });
+    } catch (e) {
+      setState(() {
+        error = "Something went wrong ";
+      });
+    }
+
+    // throw Exception('Error 400 or more'); No usarlo ahorita
+
+    // print(response.body);
+    
   }
 
   void _addItem() async {
@@ -66,6 +92,17 @@ class _GroceryListState extends State<GroceryList> {
     });
   }
 
+  // void removeItem(GroceryItem item) {
+  //   final url = Uri.https('hola-2da75-default-rtdb.firebaseio.com',
+  //       'shopping-list/${item.id}.json');
+
+  //   http.delete(url);
+
+  //   setState(() {
+  //     _groceryItems.remove(item);
+  //   });
+  // }
+
   @override
   Widget build(BuildContext context) {
     Widget content = const Center(
@@ -76,13 +113,17 @@ class _GroceryListState extends State<GroceryList> {
       content = const Center(
         child: CircularProgressIndicator(),
       );
-    } 
+    }
 
     if (_groceryItems.isNotEmpty) {
       content = ListView.builder(
         itemCount: _groceryItems.length,
         itemBuilder: (context, index) => Dismissible(
           onDismissed: (direction) => setState(() {
+            final url = Uri.https('hola-2da75-default-rtdb.firebaseio.com',
+                'shopping-list/${_groceryItems[index].id}.json');
+
+            http.delete(url);
             _groceryItems.removeAt(index);
           }),
           key: ValueKey(_groceryItems[index].id),
@@ -96,6 +137,12 @@ class _GroceryListState extends State<GroceryList> {
             trailing: Text('${_groceryItems[index].quantity}'),
           ),
         ),
+      );
+    }
+
+    if (error != null) {
+      content = Center(
+        child: Text(error!),
       );
     }
 
