@@ -15,7 +15,7 @@ class GroceryListF extends StatefulWidget {
 }
 
 class _GroceryListStateF extends State<GroceryListF> {
-  List<GroceryItem> _groceryItems = [];
+  final List<GroceryItem> _groceryItems = [];
   Future<List<GroceryItem>>? _groceryItemsFuture;
   String? error;
 
@@ -108,9 +108,6 @@ class _GroceryListStateF extends State<GroceryListF> {
 
   @override
   Widget build(BuildContext context) {
-    Widget content = const Center(
-      child: Text('No items yet!'),
-    );
 
     // if (isLoading) {
     //   content = const Center(
