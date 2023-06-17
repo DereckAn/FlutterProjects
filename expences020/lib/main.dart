@@ -3,7 +3,7 @@ import 'widget/expenses.dart';
 
 void main() {
   runApp(
-    const MaterialApp(
+     const MaterialApp(
       home: Expenses(),
     ),
   );
