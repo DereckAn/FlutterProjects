@@ -37,9 +37,12 @@ class _ExpensesState extends State<Expenses> {
 
   _openAdd() {
     showModalBottomSheet(
-      context: context,
-      builder: (ctx) => const NewExpense(),
-    );
+  context: context,
+  shape: const RoundedRectangleBorder(
+    borderRadius: BorderRadius.vertical(top: Radius.circular(20.0)),
+  ),
+  builder: (ctx) => const NewExpense(),
+);
   }
 
   @override
