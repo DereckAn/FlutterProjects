@@ -2,7 +2,9 @@ import 'package:expences020/model/expense.dart';
 import 'package:flutter/material.dart';
 
 class NewExpense extends StatefulWidget {
-  const NewExpense({super.key});
+  const NewExpense(this.addExpense, {super.key});
+
+  final void Function(Expense expense) addExpense;
 
   @override
   State<NewExpense> createState() => _NewExpenseState();
@@ -33,6 +35,37 @@ class _NewExpenseState extends State<NewExpense> {
     });
   }
 
+  void _submittedForm() {
+    //validation
+    final enteredAmount = double.tryParse(_amoutnController
+        .text); //esto es para convertir el texto a double para el validation
+    final amountValid = enteredAmount == null || enteredAmount <= 0;
+    if (amountValid ||
+        _titleController.text.trim().isEmpty ||
+        _selectedDate == null) {
+      showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: const Text('Error'),
+          content: const Text('Please enter a valid amount and title'),
+          actions: [
+            TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text('Ok'))
+          ],
+        ),
+      );
+      return;
+    }
+    widget.addExpense(Expense(
+        category: _selectedCategory,
+        title: _titleController.text,
+        amount: enteredAmount,
+        date: _selectedDate!));
+  }
+
   @override
   void dispose() {
     //esto es oara eliminar el controlador
@@ -45,7 +78,7 @@ class _NewExpenseState extends State<NewExpense> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.fromLTRB(16, 60, 16, 16),
       child: Column(
         children: [
           TextField(
@@ -95,12 +128,12 @@ class _NewExpenseState extends State<NewExpense> {
           Row(
             children: [
               DropdownButton(
-                value: _selectedCategory,
+                  value: _selectedCategory,
                   // Esto es importante para crear un dropdown
                   items: Category.values
                       .map(
                         (enu) => DropdownMenuItem(
-                          value: category,
+                          value: enu,
                           child: Text(enu.name.toUpperCase()),
                         ),
                       )
@@ -119,11 +152,10 @@ class _NewExpenseState extends State<NewExpense> {
                   },
                   child: const Text('Cancel')),
               ElevatedButton(
-                  onPressed: () {
-                    // print(_entereTitle);
-                    print(_titleController.text);
-                    print(_amoutnController.text);
-                  },
+                  onPressed:(){
+                    Navigator.pop(context);
+                    _submittedForm();
+                  },//() => Navigator.pop(context
                   child: const Text("Add")),
             ],
           )
