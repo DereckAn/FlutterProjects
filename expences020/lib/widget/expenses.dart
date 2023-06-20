@@ -53,11 +53,20 @@ class _ExpensesState extends State<Expenses> {
     _registerExpenses.add(expense);
       
     });
-    
+  }
+
+  void _deleteExpense(Expense expense){
+    setState(() {
+      _registerExpenses.remove(expense);
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    Widget mainContext = const Center(
+      child: Text("There are no expenses yet"),
+    );
+
     return Scaffold(
         appBar: AppBar(
           title: const Text('Expenses'),
@@ -69,9 +78,12 @@ class _ExpensesState extends State<Expenses> {
             )
           ],
         ),
-        body: Column(
+        body: _registerExpenses.isEmpty
+            ? mainContext
+            :
+        Column(
           children: <Widget>[
-            Expanded(child: ExpensesList(_registerExpenses)),
+            Expanded(child: ExpensesList(_registerExpenses, _deleteExpense)),
           ],
         ));
   }
