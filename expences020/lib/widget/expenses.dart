@@ -38,27 +38,39 @@ class _ExpensesState extends State<Expenses> {
   _openAdd() {
     showModalBottomSheet(
       isScrollControlled: true,
-  context: context,
-  shape: const RoundedRectangleBorder(
-    borderRadius: BorderRadius.vertical(top: Radius.circular(20.0)),
-  ),
-  builder: (ctx) =>  NewExpense(_addExpence),
-);
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20.0)),
+      ),
+      builder: (ctx) => NewExpense(_addExpence),
+    );
   }
 
-
-   void _addExpence(Expense expense){
+  void _addExpence(Expense expense) {
     setState(() {
-
-    _registerExpenses.add(expense);
-      
+      _registerExpenses.add(expense);
     });
   }
 
-  void _deleteExpense(Expense expense){
+  void _deleteExpense(Expense expense) {
+    final index = _registerExpenses.indexOf(expense); //Esto es para que enlistar los itemas ypara cuando los eliminemos y apretemos undo vuelvana aparecer en el mismo lugar 
     setState(() {
       _registerExpenses.remove(expense);
     });
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: const Text('Expense deleted'),
+        duration: const Duration(seconds: 2),
+        action: SnackBarAction(
+          label: 'Undo',
+          onPressed: () {
+            setState(() {
+              _registerExpenses.insert(index, expense);
+            });
+          },
+        ),
+      ),
+    );
   }
 
   @override
@@ -66,6 +78,10 @@ class _ExpensesState extends State<Expenses> {
     Widget mainContext = const Center(
       child: Text("There are no expenses yet"),
     );
+
+    if (_registerExpenses.isNotEmpty) {
+      mainContext = ExpensesList(_registerExpenses, _deleteExpense);
+    }
 
     return Scaffold(
         appBar: AppBar(
@@ -78,12 +94,9 @@ class _ExpensesState extends State<Expenses> {
             )
           ],
         ),
-        body: _registerExpenses.isEmpty
-            ? mainContext
-            :
-        Column(
+        body: Column(
           children: <Widget>[
-            Expanded(child: ExpensesList(_registerExpenses, _deleteExpense)),
+            Expanded(child: mainContext),
           ],
         ));
   }
