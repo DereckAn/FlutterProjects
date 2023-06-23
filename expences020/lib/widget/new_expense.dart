@@ -126,6 +126,7 @@ class _NewExpenseState extends State<NewExpense> {
             ],
           ),
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               DropdownButton(
                   value: _selectedCategory,
@@ -146,17 +147,21 @@ class _NewExpenseState extends State<NewExpense> {
                       _selectedCategory = value;
                     });
                   }),
-              TextButton(
-                  onPressed: () {
-                    Navigator.pop(context); //esto hace que se cierre el wigdet
-                  },
-                  child: const Text('Cancel')),
-              ElevatedButton(
-                  onPressed:(){
-                    Navigator.pop(context);
-                    _submittedForm();
-                  },//() => Navigator.pop(context
-                  child: const Text("Add")),
+              Row(
+                children: [
+                  TextButton(
+                      onPressed: () {
+                        Navigator.pop(context); //esto hace que se cierre el wigdet
+                      },
+                      child: const Text('Cancel')),
+                  ElevatedButton(
+                      onPressed:(){
+                        Navigator.pop(context);
+                        _submittedForm();
+                      },//() => Navigator.pop(context
+                      child: const Text("Add")),
+                ],
+              ),
             ],
           )
         ],

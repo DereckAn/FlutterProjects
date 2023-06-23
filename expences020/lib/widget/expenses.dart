@@ -65,7 +65,8 @@ class _ExpensesState extends State<Expenses> {
           label: 'Undo',
           onPressed: () {
             setState(() {
-              _registerExpenses.insert(index, expense);
+              _registerExpenses.insert(index, expense
+              );
             });
           },
         ),
@@ -85,7 +86,8 @@ class _ExpensesState extends State<Expenses> {
 
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Expenses'),
+          // backgroundColor: Colors.white,
+          title: const Text('Expenses', style: TextStyle(color: Colors.black),),
           centerTitle: true,
           actions: [
             IconButton(
