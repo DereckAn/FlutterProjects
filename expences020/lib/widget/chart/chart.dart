@@ -30,7 +30,9 @@ class Chart extends StatelessWidget {
 
     return maxTotalExpense;
   }
+  
 
+  
   @override
   Widget build(BuildContext context) {
     final isDarkMode =
