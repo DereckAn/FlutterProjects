@@ -1,14 +1,26 @@
 import 'package:flutter/material.dart';
 import 'widget/expenses.dart';
+// import 'package:flutter/services.dart'; //Esto es para importar lo que nos bloqueara la rotacion de pantalla
 
 var kColorScheme =
-    ColorScheme.fromSeed(seedColor: Color.fromARGB(255, 11, 224, 11));
+    ColorScheme.fromSeed(seedColor: const Color.fromARGB(255, 11, 224, 11));
 
-var kColorSchemeDark =
-    ColorScheme.fromSeed(seedColor: Color.fromARGB(255, 5, 99, 125),
+var kColorSchemeDark = ColorScheme.fromSeed(
+    seedColor: const Color.fromARGB(255, 5, 99, 125),
     brightness: Brightness.dark);
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  //Al llamar a WidgetsFlutterBinding.ensureInitialized();,
+  //se asegura que se haya inicializado el motor de Flutter y se hayan establecido todas las configuraciones y
+  //dependencias necesarias para que los widgets funcionen correctamente. Esto incluye la configuración de la representación gráfica,
+  //la gestión del ciclo de vida de la aplicación y la inicialización de otros componentes esenciales.
+
+  // SystemChrome.setPreferredOrientations([
+  //   //Esto es para bloquear la rotacion de pantalla
+  //   DeviceOrientation.portraitUp,
+  //   // DeviceOrientation.portraitDown,
+  // ]).then((value) => {
   runApp(
     MaterialApp(
       darkTheme: ThemeData.dark().copyWith(
@@ -23,11 +35,11 @@ void main() {
           ),
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: kColorSchemeDark.primaryContainer,
-              foregroundColor: kColorSchemeDark.onPrimaryContainer,
-            ),
+          style: ElevatedButton.styleFrom(
+            backgroundColor: kColorSchemeDark.primaryContainer,
+            foregroundColor: kColorSchemeDark.onPrimaryContainer,
           ),
+        ),
       ),
       // Esto es para darle diseño a la app
       theme: ThemeData().copyWith(
@@ -62,4 +74,6 @@ void main() {
       home: const Expenses(),
     ),
   );
+
+  // });
 }
