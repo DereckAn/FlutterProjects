@@ -38,6 +38,7 @@ class _ExpensesState extends State<Expenses> {
 
   _openAdd() {
     showModalBottomSheet(
+      useSafeArea: true, // Con esto el widet no llega hasta la camara o los iconos de senal o la hora  que ya trae el celular por defecto 
       isScrollControlled: true,
       context: context,
       shape: const RoundedRectangleBorder(
