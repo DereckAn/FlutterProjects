@@ -80,7 +80,7 @@ class _NewExpenseState extends State<NewExpense> {
     final keyBoard = MediaQuery.of(context).viewInsets.bottom;
 
     return LayoutBuilder(builder: (ctx, constraints) {
-final widthh = constraints.maxWidth;
+      final widthh = constraints.maxWidth;
 
       return SizedBox(
         height: double.infinity,
@@ -89,90 +89,185 @@ final widthh = constraints.maxWidth;
             padding: EdgeInsets.fromLTRB(16, 60, 16, keyBoard + 16),
             child: Column(
               children: [
-                TextField(
-                  controller:
-                      _titleController, //Estos son varios metodos para obtener el texto
-                  // onChanged: _saveTitle, // estse es otro meotodo para obtener el texto
-                  maxLength: 50,
-                  decoration: const InputDecoration(
-                    labelText: "Title",
-                    border: OutlineInputBorder(),
-                  ),
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: TextField(
-                        controller:
-                            _amoutnController, //Estos son varios metodos para obtener el texto
-                        keyboardType: TextInputType.number,
-                        decoration: const InputDecoration(
-                          prefixText: '\$ ',
-                          labelText: "Amount",
-                          border: OutlineInputBorder(),
+                if (widthh >= 600)
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        child: TextField(
+                          controller:
+                              _titleController, //Estos son varios metodos para obtener el texto
+                          // onChanged: _saveTitle, // estse es otro meotodo para obtener el texto
+                          maxLength: 50,
+                          decoration: const InputDecoration(
+                            labelText: "Title",
+                            border: OutlineInputBorder(),
+                          ),
                         ),
                       ),
-                    ),
-                    const SizedBox(
-                      width: 16,
-                    ),
-                    Expanded(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(_selectedDate == null
-                              ? 'No date chosen'
-                              : formatter.format(_selectedDate!)),
-                          IconButton(
-                            onPressed: _presentDatePicker,
-                            icon: const Icon(Icons.calendar_today),
+                      const SizedBox(
+                        width: 24,
+                      ),
+                      Expanded(
+                        child: TextField(
+                          controller:
+                              _amoutnController, //Estos son varios metodos para obtener el texto
+                          keyboardType: TextInputType.number,
+                          decoration: const InputDecoration(
+                            prefixText: '\$ ',
+                            labelText: "Amount",
+                            border: OutlineInputBorder(),
                           ),
+                        ),
+                      ),
+                    ],
+                  )
+                else
+                  TextField(
+                    controller:
+                        _titleController, //Estos son varios metodos para obtener el texto
+                    // onChanged: _saveTitle, // estse es otro meotodo para obtener el texto
+                    maxLength: 50,
+                    decoration: const InputDecoration(
+                      labelText: "Title",
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                if (widthh >= 600)
+                  Row(
+                    children: [
+                      DropdownButton(
+                          value: _selectedCategory,
+                          // Esto es importante para crear un dropdown
+                          items: Category.values
+                              .map(
+                                (enu) => DropdownMenuItem(
+                                  value: enu,
+                                  child: Text(enu.name.toUpperCase()),
+                                ),
+                              )
+                              .toList(),
+                          onChanged: (value) {
+                            if (value == null) {
+                              return;
+                            }
+                            setState(() {
+                              _selectedCategory = value;
+                            });
+                          }),
+                      const SizedBox(
+                        width: 24,
+                      ),
+                      Expanded(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(_selectedDate == null
+                                ? 'No date chosen'
+                                : formatter.format(_selectedDate!)),
+                            IconButton(
+                              onPressed: _presentDatePicker,
+                              icon: const Icon(Icons.calendar_today),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  )
+                else
+                  Row(
+                    children: [
+                      Expanded(
+                        child: TextField(
+                          controller:
+                              _amoutnController, //Estos son varios metodos para obtener el texto
+                          keyboardType: TextInputType.number,
+                          decoration: const InputDecoration(
+                            prefixText: '\$ ',
+                            labelText: "Amount",
+                            border: OutlineInputBorder(),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 16,
+                      ),
+                      Expanded(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(_selectedDate == null
+                                ? 'No date chosen'
+                                : formatter.format(_selectedDate!)),
+                            IconButton(
+                              onPressed: _presentDatePicker,
+                              icon: const Icon(Icons.calendar_today),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                if (widthh >= 600)
+                  Row(
+                    children: [
+                      TextButton(
+                          onPressed: () {
+                            Navigator.pop(
+                                context); //esto hace que se cierre el wigdet
+                          },
+                          child: const Text('Cancel')),
+                      ElevatedButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                            _submittedForm();
+                          }, //() => Navigator.pop(context
+                          child: const Text("Add")),
+                    ],
+                  )
+                else
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      DropdownButton(
+                          value: _selectedCategory,
+                          // Esto es importante para crear un dropdown
+                          items: Category.values
+                              .map(
+                                (enu) => DropdownMenuItem(
+                                  value: enu,
+                                  child: Text(enu.name.toUpperCase()),
+                                ),
+                              )
+                              .toList(),
+                          onChanged: (value) {
+                            if (value == null) {
+                              return;
+                            }
+                            setState(() {
+                              _selectedCategory = value;
+                            });
+                          }),
+                      Row(
+                        children: [
+                          TextButton(
+                              onPressed: () {
+                                Navigator.pop(
+                                    context); //esto hace que se cierre el wigdet
+                              },
+                              child: const Text('Cancel')),
+                          ElevatedButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                                _submittedForm();
+                              }, //() => Navigator.pop(context
+                              child: const Text("Add")),
                         ],
                       ),
-                    ),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    DropdownButton(
-                        value: _selectedCategory,
-                        // Esto es importante para crear un dropdown
-                        items: Category.values
-                            .map(
-                              (enu) => DropdownMenuItem(
-                                value: enu,
-                                child: Text(enu.name.toUpperCase()),
-                              ),
-                            )
-                            .toList(),
-                        onChanged: (value) {
-                          if (value == null) {
-                            return;
-                          }
-                          setState(() {
-                            _selectedCategory = value;
-                          });
-                        }),
-                    Row(
-                      children: [
-                        TextButton(
-                            onPressed: () {
-                              Navigator.pop(
-                                  context); //esto hace que se cierre el wigdet
-                            },
-                            child: const Text('Cancel')),
-                        ElevatedButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                              _submittedForm();
-                            }, //() => Navigator.pop(context
-                            child: const Text("Add")),
-                      ],
-                    ),
-                  ],
-                )
+                    ],
+                  )
               ],
             ),
           ),
