@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:expences020/model/expense.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class NewExpense extends StatefulWidget {
@@ -35,6 +38,40 @@ class _NewExpenseState extends State<NewExpense> {
     });
   }
 
+  void _showDialog() {
+    if(Platform.isIOS){ // Esto es para sbae en que plataforma estamos. 
+      showCupertinoDialog(
+        context: context,
+        builder: (ctx) => CupertinoAlertDialog(
+              title: const Text('Error'),
+              content: const Text('Please enter a valid amount and title'),
+              actions: [
+                CupertinoDialogAction(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('Ok'),
+                )
+              ],
+            ));
+    } else {
+      showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text('Error'),
+        content: const Text('Please enter a valid amount and title'),
+        actions: [
+          TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Ok'))
+        ],
+      ),
+    );
+    }    
+  }
+
   void _submittedForm() {
     //validation
     final enteredAmount = double.tryParse(_amoutnController
@@ -43,20 +80,7 @@ class _NewExpenseState extends State<NewExpense> {
     if (amountValid ||
         _titleController.text.trim().isEmpty ||
         _selectedDate == null) {
-      showDialog(
-        context: context,
-        builder: (ctx) => AlertDialog(
-          title: const Text('Error'),
-          content: const Text('Please enter a valid amount and title'),
-          actions: [
-            TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: const Text('Ok'))
-          ],
-        ),
-      );
+      _showDialog();
       return;
     }
     widget.addExpense(Expense(
