@@ -16,6 +16,7 @@ class MealsPage extends StatelessWidget {
         title: Text(meals[index].title),
       );
     });
+
     if (meals.isEmpty) {
       content =  Center(
         child: Column(
@@ -27,6 +28,7 @@ class MealsPage extends StatelessWidget {
         ),
       );
     }
+    
     return Scaffold(
       appBar: AppBar(
         title: Text(title),
