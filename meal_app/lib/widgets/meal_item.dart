@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:meal_app/models/meal.dart';
+import 'package:meal_app/screens/meals_details.dart';
 import 'package:meal_app/widgets/meal_item_trail.dart';
 import 'package:transparent_image/transparent_image.dart';
 
@@ -24,7 +25,9 @@ class MealItem extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
         clipBehavior: Clip.hardEdge,
         child: InkWell(
-          onTap: () {},
+          onTap: () {
+            Navigator.of(context).push(MaterialPageRoute(builder: (ctx) => MealsDetailsScreen(meal: meal),),);
+          },
           child: Stack(
             children: [
               FadeInImage(
@@ -60,13 +63,13 @@ class MealItem extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const SizedBox(width: 20),
+                          const SizedBox(width: 17),
                           MealIteamTrail(
                               icon: Icons.schedule, label:'${meal.duration} min'),
-                          const SizedBox(width: 20),
+                          const SizedBox(width: 17),
                           MealIteamTrail(
                               icon: Icons.work, label:complexityText),
-                               const SizedBox(width: 20),
+                               const SizedBox(width: 17),
                           MealIteamTrail(
                               icon: Icons.attach_money, label:affordabilityText),
                         ],
