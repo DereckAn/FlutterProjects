@@ -20,11 +20,7 @@ class CategoriesPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Categories'),
-      ),
-      body: GridView(
+    return GridView(
         padding: const EdgeInsets.all(15),
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
@@ -41,7 +37,6 @@ class CategoriesPage extends StatelessWidget {
               },
             ),
         ],
-      ),
-    );
+      );
   }
 }
