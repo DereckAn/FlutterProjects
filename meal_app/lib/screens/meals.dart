@@ -13,7 +13,8 @@ class MealsPage extends StatelessWidget {
     Widget content = ListView.builder(
         itemCount: meals.length,
         itemBuilder: (context, index) {
-          return MealItem(meal: meals[index]);
+          print(meals[index].categories);
+          return MealItem(meal: meals[index], onToggleFavorite: (meal) {});
         });
 
     if (meals.isEmpty) {
