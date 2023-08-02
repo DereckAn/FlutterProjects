@@ -3,9 +3,8 @@ import 'package:meal_app/models/meal.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 class MealsDetailsScreen extends StatelessWidget {
-  const MealsDetailsScreen({super.key, required this.meal, required this.onToggleFavorite});
+  const MealsDetailsScreen({super.key, required this.meal});
   final Meal meal;
-  final void Function(Meal meal) onToggleFavorite;
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +13,7 @@ class MealsDetailsScreen extends StatelessWidget {
           actions: [
             IconButton(
               onPressed: () {
-                onToggleFavorite(meal);
+
               },
               icon: const Icon(Icons.star),
             ),

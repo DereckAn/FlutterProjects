@@ -5,9 +5,8 @@ import 'package:meal_app/widgets/meal_item_trail.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 class MealItem extends StatelessWidget {
-  const MealItem({super.key, required this.meal, required this.onToggleFavorite});
+  const MealItem({super.key, required this.meal, });
   final Meal meal;
-  final Function(Meal meal) onToggleFavorite;
 
   String get complexityText {
     return meal.complexity.name[0].toUpperCase() +
@@ -27,7 +26,7 @@ class MealItem extends StatelessWidget {
         clipBehavior: Clip.hardEdge,
         child: InkWell(
           onTap: () {
-            Navigator.of(context).push(MaterialPageRoute(builder: (ctx) => MealsDetailsScreen(meal: meal, onToggleFavorite: onToggleFavorite ,),),);
+            Navigator.of(context).push(MaterialPageRoute(builder: (ctx) => MealsDetailsScreen(meal: meal, ),),);
           },
           child: Stack(
             children: [

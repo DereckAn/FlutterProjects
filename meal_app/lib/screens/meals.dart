@@ -14,7 +14,7 @@ class MealsPage extends StatelessWidget {
         itemCount: meals.length,
         itemBuilder: (context, index) {
           print(meals[index].categories);
-          return MealItem(meal: meals[index], onToggleFavorite: (meal) {});
+          return MealItem(meal: meals[index],  );
         });
 
     if (meals.isEmpty) {
