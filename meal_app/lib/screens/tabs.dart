@@ -4,6 +4,8 @@ import 'package:meal_app/models/meal.dart';
 import 'package:meal_app/screens/categories.dart';
 import 'package:meal_app/screens/meals.dart';
 
+import '../widgets/main_drawer.dart';
+
 class TabsScreen extends StatefulWidget {
   const TabsScreen({super.key});
 
@@ -31,10 +33,13 @@ class _TabsScreenState extends State<TabsScreen> {
       setState(() {
       _favoriteMeals.remove(meal);
       });
+      showInfo('Removed from favorites');
     } else {
       setState(() {
       _favoriteMeals.add(meal);
       });
+      showInfo('Add it to favorites');
+
     }
   }
 
@@ -58,6 +63,7 @@ class _TabsScreenState extends State<TabsScreen> {
       appBar: AppBar(
         title: Text(activePageTitle),
       ),
+      drawer: const MainDrawer(),
       body: activePage,
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedPageIndex,
