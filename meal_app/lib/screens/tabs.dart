@@ -13,14 +13,28 @@ class TabsScreen extends StatefulWidget {
 
 class _TabsScreenState extends State<TabsScreen> {
   int _selectedPageIndex = 0;
-  final List<Meal> _favoriteMeals = [];
+  final List<Meal> _favoriteMeals = []; 
+
+  void showInfo(String message) {
+    ScaffoldMessenger.of(context).clearSnackBars();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        duration: const Duration(seconds: 2),
+      ),
+    );
+  }
 
   void _pasarMealFavorite(Meal meal) {
     final isFavorite = _favoriteMeals.contains(meal);
     if (isFavorite) {
+      setState(() {
       _favoriteMeals.remove(meal);
+      });
     } else {
+      setState(() {
       _favoriteMeals.add(meal);
+      });
     }
   }
 
@@ -32,11 +46,11 @@ class _TabsScreenState extends State<TabsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Widget activePage = const CategoriesPage();
+    Widget activePage =  CategoriesPage(onFavoritePressed:_pasarMealFavorite,);
     var activePageTitle = 'Categories';
 
     if (_selectedPageIndex == 1) {
-      activePage = MealsPage(meals: _favoriteMeals);
+      activePage = MealsPage(meals: _favoriteMeals, onFavoritePressed: _pasarMealFavorite);
       activePageTitle = ' Your favorites';
     }
 

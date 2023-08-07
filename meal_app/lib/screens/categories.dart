@@ -4,16 +4,19 @@ import 'package:meal_app/screens/meals.dart';
 import 'package:meal_app/widgets/category_grid_item.dart';
 
 import '../data/dummy_data.dart';
+import '../models/meal.dart';
 
 class CategoriesPage extends StatelessWidget {
-  const CategoriesPage({super.key});
+  const CategoriesPage({super.key, required this.onFavoritePressed});
+  final void Function(Meal meal) onFavoritePressed;
+  
 
 
   void _selectCategory(BuildContext context, Category category) {
     final filteredMeals = dummyMeals.where((meal) => meal.categories.contains(category.id)).toList(); //Esto es para filtrar la lista
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (ctx) =>  MealsPage(title: category.title, meals: filteredMeals),
+        builder: (ctx) =>  MealsPage(title: category.title, meals: filteredMeals, onFavoritePressed: onFavoritePressed,),
       ),
     );
   }
