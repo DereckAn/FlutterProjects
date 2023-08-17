@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:meal_app/screens/tabs.dart';
-import 'package:meal_app/widgets/main_drawer.dart';
 
 class FilterScreen extends StatefulWidget {
   const FilterScreen({super.key});
@@ -11,6 +9,8 @@ class FilterScreen extends StatefulWidget {
 
 class _FilterScreenState extends State<FilterScreen> {
   var _gluttenFree = false;
+  var _vegetarian = false;
+  var _lactoseFree = false;
 
   @override
   Widget build(BuildContext context) {
@@ -47,6 +47,52 @@ class _FilterScreenState extends State<FilterScreen> {
             ),
             subtitle: Text(
               'Only include gluten-free meals',
+              style: Theme.of(context).textTheme.labelMedium!.copyWith(
+                    color: Theme.of(context).colorScheme.onBackground,
+                  ),
+            ),
+            activeColor: Theme.of(context).colorScheme.tertiary,
+            contentPadding: const EdgeInsets.only(left: 34, right: 22),
+          ),
+
+          SwitchListTile(
+            value: _lactoseFree,
+            onChanged: (ischecked) {
+              setState(() {
+                _lactoseFree = ischecked;
+              });
+            },
+            title: Text(
+              'Lactose-free',
+              style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                    color: Theme.of(context).colorScheme.onBackground,
+                  ),
+            ),
+            subtitle: Text(
+              'Only include lactose-free meals',
+              style: Theme.of(context).textTheme.labelMedium!.copyWith(
+                    color: Theme.of(context).colorScheme.onBackground,
+                  ),
+            ),
+            activeColor: Theme.of(context).colorScheme.tertiary,
+            contentPadding: const EdgeInsets.only(left: 34, right: 22),
+          ),
+
+          SwitchListTile(
+            value: _vegetarian,
+            onChanged: (ischecked) {
+              setState(() {
+                _vegetarian = ischecked;
+              });
+            },
+            title: Text(
+              'Vegetarian',
+              style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                    color: Theme.of(context).colorScheme.onBackground,
+                  ),
+            ),
+            subtitle: Text(
+              'Only include vegetarian meals',
               style: Theme.of(context).textTheme.labelMedium!.copyWith(
                     color: Theme.of(context).colorScheme.onBackground,
                   ),
