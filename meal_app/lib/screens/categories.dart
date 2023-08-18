@@ -7,13 +7,14 @@ import '../data/dummy_data.dart';
 import '../models/meal.dart';
 
 class CategoriesPage extends StatelessWidget {
-  const CategoriesPage({super.key, required this.onFavoritePressed});
+  const CategoriesPage({super.key, required this.onFavoritePressed, required this.filterMeals});
   final void Function(Meal meal) onFavoritePressed;
+  final List<Meal> filterMeals;
   
 
 
   void _selectCategory(BuildContext context, Category category) {
-    final filteredMeals = dummyMeals.where((meal) => meal.categories.contains(category.id)).toList(); //Esto es para filtrar la lista
+    final filteredMeals = filterMeals.where((meal) => meal.categories.contains(category.id)).toList(); //Esto es para filtrar la lista
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (ctx) =>  MealsPage(title: category.title, meals: filteredMeals, onFavoritePressed: onFavoritePressed,),
