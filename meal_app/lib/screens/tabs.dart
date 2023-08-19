@@ -6,6 +6,8 @@ import 'package:meal_app/screens/categories.dart';
 import 'package:meal_app/screens/meals.dart';
 import 'package:meal_app/providers/meals_provider.dart';
 // import '../data/dummy_data.dart';
+import 'package:meal_app/providers/favorites_provider.dart';
+
 import '../widgets/main_drawer.dart';
 import 'filter.dart';
 
@@ -96,7 +98,8 @@ class _TabsScreenState extends ConsumerState<TabsScreen> {
     var activePageTitle = 'Categories';
 
     if (_selectedPageIndex == 1) {
-      activePage = MealsPage(meals: _favoriteMeals, onFavoritePressed: _pasarMealFavorite);
+      final favoriteMealas = ref.watch(favoriteMeals);
+      activePage = MealsPage(meals: favoriteMealas, onFavoritePressed: _pasarMealFavorite);
       activePageTitle = ' Your favorites';
     }
 
