@@ -1,20 +1,17 @@
 import 'package:flutter/material.dart';
-enum Filter{
-  glutenFree,
-  lactoseFree,
-  vegetarian,
-  vegan
-}
+import 'package:meal_app/providers/filters_provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class FilterScreen extends StatefulWidget {
+
+class FilterScreen extends ConsumerStatefulWidget {
   const FilterScreen({super.key, required this.actualFilters});
   final Map<Filter, bool> actualFilters;
 
   @override
-  State<FilterScreen> createState() => _FilterScreenState();
+  ConsumerState<FilterScreen> createState() => _FilterScreenState();
 }
 
-class _FilterScreenState extends State<FilterScreen> {
+class _FilterScreenState extends ConsumerState<FilterScreen> {
   var _gluttenFree = false;
   var _vegetarian = false;
   var _lactoseFree = false;

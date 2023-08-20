@@ -10,6 +10,7 @@ import 'package:meal_app/providers/favorites_provider.dart';
 
 import '../widgets/main_drawer.dart';
 import 'filter.dart';
+import 'package:meal_app/providers/filters_provider.dart';
 
 const _initialFilters = {
   Filter.glutenFree: false,
