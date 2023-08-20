@@ -5,15 +5,21 @@ import 'package:meal_app/widgets/meal_item.dart';
 import '../models/meal.dart';
 
 class MealsPage extends StatelessWidget {
-  const MealsPage({super.key, this.title, required this.meals, required this.onFavoritePressed});
+  const MealsPage({
+    super.key,
+    this.title,
+    required this.meals,
+  });
   final String? title;
   final List<Meal> meals;
-  final void Function(Meal meal) onFavoritePressed;
-
+  // final void Function(Meal meal) onFavoritePressed;
 
   void selectMeal(BuildContext context, Meal meal) {
-    Navigator.of(context).push( MaterialPageRoute(builder: (_) {
-      return MealsDetailsScreen(meal: meal, onFavoritePressed: onFavoritePressed );
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+      return MealsDetailsScreen(
+          meal: meal, 
+          // onFavoritePressed: onFavoritePressed
+          );
     }));
   }
 
@@ -22,9 +28,12 @@ class MealsPage extends StatelessWidget {
     Widget content = ListView.builder(
         itemCount: meals.length,
         itemBuilder: (context, index) {
-          return MealItem(meal: meals[index],  onMealSelected:  (meal) {
-            selectMeal(context, meal);
-          },);
+          return MealItem(
+            meal: meals[index],
+            onMealSelected: (meal) {
+              selectMeal(context, meal);
+            },
+          );
         });
 
     if (meals.isEmpty) {
@@ -49,7 +58,7 @@ class MealsPage extends StatelessWidget {
       );
     }
 
-    if(title == null){
+    if (title == null) {
       return content;
     }
 

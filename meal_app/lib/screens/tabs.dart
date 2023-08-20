@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:meal_app/models/meal.dart';
+// import 'package:meal_app/models/meal.dart';
 import 'package:meal_app/screens/categories.dart';
 import 'package:meal_app/screens/meals.dart';
 import 'package:meal_app/providers/meals_provider.dart';
@@ -27,34 +27,25 @@ class TabsScreen extends ConsumerStatefulWidget {
 
 class _TabsScreenState extends ConsumerState<TabsScreen> {
   int _selectedPageIndex = 0;
-  final List<Meal> _favoriteMeals = []; 
-  Map<Filter, bool> _filters =  _initialFilters;
+  // final List<Meal> _favoriteMeals = [];
+  Map<Filter, bool> _filters = _initialFilters;
 
-  void showInfo(String message) {
-    ScaffoldMessenger.of(context).clearSnackBars();
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message),
-        duration: const Duration(seconds: 2),
-      ),
-    );
-  }
+  
+  // void _pasarMealFavorite(Meal meal) {
+  //   final isFavorite = _favoriteMeals.contains(meal);
+  //   if (isFavorite) {
+  //     setState(() {
+  //     _favoriteMeals.remove(meal);
+  //     });
+  //     showInfo('Removed from favorites');
+  //   } else {
+  //     setState(() {
+  //     _favoriteMeals.add(meal);
+  //     });
+  //     showInfo('Add it to favorites');
 
-  void _pasarMealFavorite(Meal meal) {
-    final isFavorite = _favoriteMeals.contains(meal);
-    if (isFavorite) {
-      setState(() {
-      _favoriteMeals.remove(meal);
-      });
-      showInfo('Removed from favorites');
-    } else {
-      setState(() {
-      _favoriteMeals.add(meal);
-      });
-      showInfo('Add it to favorites');
-
-    }
-  }
+  //   }
+  // }
 
   void selectPage(int index) {
     setState(() {
@@ -63,13 +54,15 @@ class _TabsScreenState extends ConsumerState<TabsScreen> {
   }
 
   void setScreen(String identifier) async {
-      Navigator.of(context).pop();
-    if(identifier == 'filters'){
-      final result = await Navigator.of(context).push<Map<Filter, bool>>(MaterialPageRoute(builder: (context)=>  FilterScreen( actualFilters: _filters)));
+    Navigator.of(context).pop();
+    if (identifier == 'filters') {
+      final result = await Navigator.of(context).push<Map<Filter, bool>>(
+          MaterialPageRoute(
+              builder: (context) => FilterScreen(actualFilters: _filters)));
       setState(() {
-      _filters = result ?? _initialFilters; //Este es una operacion por default y es lo mismo que poner if(result != null){_filters = result}
+        _filters = result ??
+            _initialFilters; //Este es una operacion por default y es lo mismo que poner if(result != null){_filters = result}
       });
-
     }
     // } else {
     //   Navigator.of(context).pop();
@@ -94,12 +87,18 @@ class _TabsScreenState extends ConsumerState<TabsScreen> {
       }
       return true;
     }).toList();
-    Widget activePage =  CategoriesPage(onFavoritePressed:_pasarMealFavorite, filterMeals: filterMeals);
+
+    Widget activePage = CategoriesPage(
+        // onFavoritePressed: _pasarMealFavorite, 
+        filterMeals: filterMeals);
     var activePageTitle = 'Categories';
 
     if (_selectedPageIndex == 1) {
       final favoriteMealas = ref.watch(favoriteMeals);
-      activePage = MealsPage(meals: favoriteMealas, onFavoritePressed: _pasarMealFavorite);
+      activePage = MealsPage(
+          meals: favoriteMealas, 
+          // onFavoritePressed: _pasarMealFavorite
+          );
       activePageTitle = ' Your favorites';
     }
 
@@ -107,7 +106,7 @@ class _TabsScreenState extends ConsumerState<TabsScreen> {
       appBar: AppBar(
         title: Text(activePageTitle),
       ),
-      drawer:  MainDrawer( onSelectScreen: setScreen),
+      drawer: MainDrawer(onSelectScreen: setScreen),
       body: activePage,
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedPageIndex,
