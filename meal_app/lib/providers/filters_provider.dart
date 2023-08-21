@@ -14,6 +14,10 @@ class Filters extends StateNotifier<Map<Filter, bool>> {
     Filter.vegan: false,
   });
 
+  void setFilters(Map<Filter, bool> filters) {
+    state = filters;
+  }
+
   void toggle(Filter filter, bool active) {
     // state[filter] = active; //not allowed to mutate state directly
     state = {
