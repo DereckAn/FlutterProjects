@@ -6,13 +6,32 @@ import 'package:meal_app/widgets/category_grid_item.dart';
 import '../data/dummy_data.dart';
 import '../models/meal.dart';
 
-class CategoriesPage extends StatelessWidget {
+class CategoriesPage extends StatefulWidget {
   const CategoriesPage({super.key, required this.filterMeals});
   // final void Function(Meal meal) onFavoritePressed;
   final List<Meal> filterMeals;
 
+  @override
+  State<CategoriesPage> createState() => _CategoriesPageState();
+}
+
+class _CategoriesPageState extends State<CategoriesPage> with SingleTickerProviderStateMixin{
+   late AnimationController _animationControl;
+
+@override
+  void initState() {
+    super.initState();
+    _animationControl = AnimationController(vsync: this, duration: const Duration(seconds: 2), upperBound: 1, lowerBound: 0);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _animationControl.dispose();
+  }
+
   void _selectCategory(BuildContext context, Category category) {
-    final filteredMeals = filterMeals
+    final filteredMeals = widget.filterMeals
         .where((meal) => meal.categories.contains(category.id))
         .toList(); //Esto es para filtrar la lista
     Navigator.of(context).push(
