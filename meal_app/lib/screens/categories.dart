@@ -15,13 +15,18 @@ class CategoriesPage extends StatefulWidget {
   State<CategoriesPage> createState() => _CategoriesPageState();
 }
 
-class _CategoriesPageState extends State<CategoriesPage> with SingleTickerProviderStateMixin{
-   late AnimationController _animationControl;
+class _CategoriesPageState extends State<CategoriesPage>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _animationControl;
 
-@override
+  @override
   void initState() {
     super.initState();
-    _animationControl = AnimationController(vsync: this, duration: const Duration(seconds: 1), upperBound: 1, lowerBound: 0);
+    _animationControl = AnimationController(
+        vsync: this,
+        duration: const Duration(seconds: 1),
+        upperBound: 1,
+        lowerBound: 0);
     _animationControl.forward();
   }
 
@@ -49,27 +54,37 @@ class _CategoriesPageState extends State<CategoriesPage> with SingleTickerProvid
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
-      animation: _animationControl, 
-      child: GridView( //Con el child podemos usar la seccion de categorias sin animarlas. Solo haran parte de la animacion. 
-      padding: const EdgeInsets.all(15),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          childAspectRatio: 3 / 2,
-          crossAxisSpacing: 20,
-          mainAxisSpacing: 20),
-      children: [
-        //Alternative way availableCategories.map((category) => CategoryGridItem(category: category)).toList(),
-        for (final category in availableCategories)
-          CategoryGridItem(
-            category: category,
-            onSelectCategory: () {
-              _selectCategory(context, category);
-            },
-          ),
-      ],
-    ),
-      builder: (context, child)=>  Padding(padding: EdgeInsets.only(top: 100 - _animationControl.value * 100), child: child
-    
+      animation: _animationControl,
+      child: GridView(
+        //Con el child podemos usar la seccion de categorias sin animarlas. Solo haran parte de la animacion.
+        padding: const EdgeInsets.all(15),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            childAspectRatio: 3 / 2,
+            crossAxisSpacing: 20,
+            mainAxisSpacing: 20),
+        children: [
+          //Alternative way availableCategories.map((category) => CategoryGridItem(category: category)).toList(),
+          for (final category in availableCategories)
+            CategoryGridItem(
+              category: category,
+              onSelectCategory: () {
+                _selectCategory(context, category);
+              },
+            ),
+        ],
+      ),
+      builder: (context, child) => 
+      SlideTransition( // Esta manera de animacion es mas optima y tenemos extra features
+
+        position: Tween(begin: const Offset(0, 0.3), end: const Offset(0, 0)).animate(CurvedAnimation(parent: _animationControl, curve: Curves.easeIn)),
+          // position: _animationControl.drive(
+          //     Tween(begin: const Offset(0, 0.3), end: const Offset(0, 0))),
+          // child: child),
+
+      // Padding(
+      //     padding: EdgeInsets.only(top: 100 - _animationControl.value * 100),
+      //     child: child),
     ),
     );
   }
