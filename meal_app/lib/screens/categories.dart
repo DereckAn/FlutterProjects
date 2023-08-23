@@ -21,7 +21,8 @@ class _CategoriesPageState extends State<CategoriesPage> with SingleTickerProvid
 @override
   void initState() {
     super.initState();
-    _animationControl = AnimationController(vsync: this, duration: const Duration(seconds: 2), upperBound: 1, lowerBound: 0);
+    _animationControl = AnimationController(vsync: this, duration: const Duration(seconds: 1), upperBound: 1, lowerBound: 0);
+    _animationControl.forward();
   }
 
   @override
@@ -47,7 +48,9 @@ class _CategoriesPageState extends State<CategoriesPage> with SingleTickerProvid
 
   @override
   Widget build(BuildContext context) {
-    return GridView(
+    return AnimatedBuilder(
+      animation: _animationControl, 
+      child: GridView( //Con el child podemos usar la seccion de categorias sin animarlas. Solo haran parte de la animacion. 
       padding: const EdgeInsets.all(15),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
@@ -64,6 +67,10 @@ class _CategoriesPageState extends State<CategoriesPage> with SingleTickerProvid
             },
           ),
       ],
+    ),
+      builder: (context, child)=>  Padding(padding: EdgeInsets.only(top: 100 - _animationControl.value * 100), child: child
+    
+    ),
     );
   }
 }
