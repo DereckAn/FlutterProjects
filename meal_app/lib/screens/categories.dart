@@ -74,18 +74,21 @@ class _CategoriesPageState extends State<CategoriesPage>
             ),
         ],
       ),
-      builder: (context, child) => 
-      SlideTransition( // Esta manera de animacion es mas optima y tenemos extra features
+      builder: (context, child) => SlideTransition(
+        // Esta manera de animacion es mas optima y tenemos extra features
 
-        position: Tween(begin: const Offset(0, 0.3), end: const Offset(0, 0)).animate(CurvedAnimation(parent: _animationControl, curve: Curves.easeIn)),
-          // position: _animationControl.drive(
-          //     Tween(begin: const Offset(0, 0.3), end: const Offset(0, 0))),
-          // child: child),
+        position: Tween(begin: const Offset(0, 0.3), end: const Offset(0, 0))
+            .animate(CurvedAnimation(
+                parent: _animationControl, curve: Curves.easeInOut), ), 
+        child: child,
+        // position: _animationControl.drive(
+        //     Tween(begin: const Offset(0, 0.3), end: const Offset(0, 0))),
+        // child: child),
 
-      // Padding(
-      //     padding: EdgeInsets.only(top: 100 - _animationControl.value * 100),
-      //     child: child),
-    ),
+        // Padding(
+        //     padding: EdgeInsets.only(top: 100 - _animationControl.value * 100),
+        //     child: child),
+      ),
     );
   }
 }
