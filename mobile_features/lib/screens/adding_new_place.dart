@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile_features/providers/user_places.dart';
+import 'package:mobile_features/widgets/poner_imagen.dart';
 
 //recuerda cambiar el statefull widget por el consumer statefull widget para tener acceso a al provider
 class AddingNewPlaceScreen extends ConsumerStatefulWidget { 
@@ -45,6 +46,10 @@ class _AddingNewPlaceScreenState extends ConsumerState<AddingNewPlaceScreen> {
                     .titleMedium!
                     .copyWith(color: Theme.of(context).colorScheme.onBackground),
               ),
+              const SizedBox(
+                height: 20,
+              ),
+              const ImageInput(),
               const SizedBox(
                 height: 20,
               ),
