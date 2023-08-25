@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_features/screens/adding_new_place.dart';
+import 'package:mobile_features/widgets/places_list.dart';
 
-class Home extends StatelessWidget {
-  const Home({super.key});
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +12,11 @@ class Home extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: () {
-            Navigator.of(context).push(MaterialPageRoute(builder: (ctx) => const AddingNewPlace(),),);
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (ctx) => const AddingNewPlaceScreen(),
+                ),
+              );
             },
             icon: const Icon(Icons.add),
           ),
@@ -19,8 +24,8 @@ class Home extends StatelessWidget {
         centerTitle: true,
         title: const Text('My Places'),
       ),
-      body: const Center(
-        child: Text('Hello World'),
+      body:  const PlacesList(
+        places: [],
       ),
     );
   }
