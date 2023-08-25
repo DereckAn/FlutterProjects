@@ -1,19 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mobile_features/providers/user_places.dart';
 
-class AddingNewPlaceScreen extends StatefulWidget {
+//recuerda cambiar el statefull widget por el consumer statefull widget para tener acceso a al provider
+class AddingNewPlaceScreen extends ConsumerStatefulWidget { 
   const AddingNewPlaceScreen({super.key});
 
   @override
-  State<AddingNewPlaceScreen> createState() => _AddingNewPlaceScreenState();
+  ConsumerState<AddingNewPlaceScreen> createState() => _AddingNewPlaceScreenState();
 }
 
-class _AddingNewPlaceScreenState extends State<AddingNewPlaceScreen> {
+class _AddingNewPlaceScreenState extends ConsumerState<AddingNewPlaceScreen> {
   final titlePlace = TextEditingController();
 
   @override
   void dispose() {
     titlePlace.dispose();
     super.dispose();
+  }
+
+  void savePlace() { // este metodo es para guardar el titulo en el provedor y luego volver a la pantalla anterior
+    if (titlePlace.text.isEmpty) { // si el titulo esta vacio no se guarda nada
+      return;
+    }
+    ref.read(userPlacesProvider.notifier).add(titlePlace.text); // aqui se guarda el titulo en el provedor
+    Navigator.of(context).pop(); // aqui se vuelve a la pantalla anterior
   }
 
   @override
@@ -39,7 +50,7 @@ class _AddingNewPlaceScreenState extends State<AddingNewPlaceScreen> {
               ),
               Center(
                 child: ElevatedButton.icon(
-                  onPressed: () {},
+                  onPressed: savePlace,
                   icon: const Icon(Icons.add),
                   label: const Text('Add place'),
                 ),
