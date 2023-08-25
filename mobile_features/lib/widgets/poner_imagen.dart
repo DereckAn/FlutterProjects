@@ -5,7 +5,9 @@ import 'package:image_picker/image_picker.dart';
 
 //Es statefull porque vamos a cambiar el UI y manejar stados
 class ImageInput extends StatefulWidget {
-  const ImageInput({super.key});
+  const ImageInput({super.key, required this.onSelectImage});
+
+  final void Function(File pickedImage) onSelectImage;
 
   @override
   State<ImageInput> createState() => _ImageInputState();
@@ -30,6 +32,8 @@ class _ImageInputState extends State<ImageInput> {
       selectedimage = File(pickedImage
           .path); // esto es para transformat el tipo de formato y asignarlo a la variable
     });
+
+    widget.onSelectImage(selectedimage!);
   }
 
   @override

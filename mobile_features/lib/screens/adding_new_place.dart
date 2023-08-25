@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile_features/providers/user_places.dart';
@@ -13,6 +15,7 @@ class AddingNewPlaceScreen extends ConsumerStatefulWidget {
 
 class _AddingNewPlaceScreenState extends ConsumerState<AddingNewPlaceScreen> {
   final titlePlace = TextEditingController();
+  File? selectedPicture;
 
   @override
   void dispose() {
@@ -21,10 +24,10 @@ class _AddingNewPlaceScreenState extends ConsumerState<AddingNewPlaceScreen> {
   }
 
   void savePlace() { // este metodo es para guardar el titulo en el provedor y luego volver a la pantalla anterior
-    if (titlePlace.text.isEmpty) { // si el titulo esta vacio no se guarda nada
+    if (titlePlace.text.isEmpty || selectedPicture == null) { // si el titulo esta vacio no se guarda nada
       return;
     }
-    ref.read(userPlacesProvider.notifier).add(titlePlace.text); // aqui se guarda el titulo en el provedor
+    ref.read(userPlacesProvider.notifier).add(titlePlace.text, selectedPicture!); // aqui se guarda el titulo en el provedor
     Navigator.of(context).pop(); // aqui se vuelve a la pantalla anterior
   }
 
@@ -49,7 +52,7 @@ class _AddingNewPlaceScreenState extends ConsumerState<AddingNewPlaceScreen> {
               const SizedBox(
                 height: 20,
               ),
-              const ImageInput(),
+               ImageInput(onSelectImage: (pickedImage) => (selectedPicture = pickedImage),),
               const SizedBox(
                 height: 20,
               ),
