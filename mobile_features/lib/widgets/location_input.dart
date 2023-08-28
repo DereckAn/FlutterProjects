@@ -24,7 +24,7 @@ class _LocationInputState extends State<LocationInput> {
 
     final lat = pickedLocation!.latitude;
     final lng = pickedLocation!.longitude;
-    return 'https://maps.googleapis.com/maps/api/staticmap?center=$lat,$lng=&zoom=13&size=600x300&maptype=roadmap&markers=color:blue%7Clabel:S%7C$lat,$lng&key=AIzaSyDve8khUCBU0VKqx5NgTJiBDji9CAwyOW8';
+    return 'https://maps.googleapis.com/maps/api/staticmap?center=$lat,$lng&zoom=16&size=600x300&maptype=roadmap&markers=color:blue%7Clabel:S%7C$lat,$lng&key=AIzaSyDve8khUCBU0VKqx5NgTJiBDji9CAwyOW8';
   }
 
   void getCurrentLocation() async {
@@ -85,9 +85,6 @@ class _LocationInputState extends State<LocationInput> {
   Widget build(BuildContext context) {
     Widget previewContent = const Text('no location chosen yet');
 
-    if(pickedLocation == null ){
-      previewContent = Text('Marico!!! algo pasa');
-    }
 
     
     if(pickedLocation != null){
