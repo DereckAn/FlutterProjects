@@ -28,7 +28,8 @@ class HomeScreen extends ConsumerWidget {
         centerTitle: true,
         title: const Text('My Places'),
       ),
-      body: PlacesList(
+      body:
+       PlacesList(
         places: userPlaces,
       ),
     );

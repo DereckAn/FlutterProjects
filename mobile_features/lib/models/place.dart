@@ -9,8 +9,9 @@ class Place {
   Place({
     required this.title,
     required this.image,
+    String? id,
     // required this.location,
-  }): id = uuid.v4();
+  }): id = id ?? uuid.v4(); // con esto tendre un id automaticamente por default pero puedo crear uno si quiero 
 
 
   final String id;
