@@ -30,14 +30,16 @@ class _AddingNewPlaceScreenState extends ConsumerState<AddingNewPlaceScreen> {
   void savePlace() {
     // este metodo es para guardar el titulo en el provedor y luego volver a la pantalla anterior
     if (titlePlace.text.isEmpty ||
-        selectedPicture == null ||
-        selectedLocation == null) {
+        selectedPicture == null
+        // selectedLocation == null
+        ) {
           print('no se guardo nada');
       // si el titulo esta vacio no se guarda nada
       return;
     }
     ref.read(userPlacesProvider.notifier).add(titlePlace.text, selectedPicture!,
-        selectedLocation!); // aqui se guarda el titulo en el provedor
+        // selectedLocation!
+        ); // aqui se guarda el titulo en el provedor
     Navigator.of(context).pop(); // aqui se vuelve a la pantalla anterior
   }
 
@@ -67,10 +69,10 @@ class _AddingNewPlaceScreenState extends ConsumerState<AddingNewPlaceScreen> {
               const SizedBox(
                 height: 20,
               ),
-              LocationInput(
-                onSelectPlace: (pickedLocation) =>
-                    (selectedLocation = pickedLocation),
-              ),
+              // LocationInput(
+              //   onSelectPlace: (pickedLocation) =>
+              //       (selectedLocation = pickedLocation),
+              // ),
               const SizedBox(
                 height: 20,
               ),

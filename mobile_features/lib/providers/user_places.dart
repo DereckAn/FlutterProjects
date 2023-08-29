@@ -6,10 +6,12 @@ import 'package:mobile_features/models/place.dart';
 class UserPLacesNotifier extends StateNotifier<List<Place>> {
   UserPLacesNotifier() : super(const []); // this is the constructor
 
-  void add(String title, File image, PlaceLocation location) {
+  void add(String title, File image, 
+  // PlaceLocation location
+  ) {
     // void add(Place place)
     // state = [...state, place];
-    final newPlace = Place(title: title, image: image, location: location);
+    final newPlace = Place(title: title, image: image, );
     state = [newPlace, ...state ]; // En este orden siemre el titulo nuevo estara al principio de la lista 
   }
 

@@ -58,16 +58,22 @@ class _LocationInputState extends State<LocationInput> {
     final lat = locationData.latitude;
     final lng = locationData.longitude;
 
-    if(lat == null || lng == null){
+
+    print(lat);
+    print(lng);
+
+
+    if (lat == null || lng == null) {
       print('algo esta siendo null');
       return;
     }
 
-    final url = Uri.parse('https://maps.googleapis.com/maps/api/geocode/json?latlng=$lat,$lng&key=AIzaSyDve8khUCBU0VKqx5NgTJiBDji9CAwyOW8&enable_address_descriptor=true');
+    final url = Uri.parse('https://maps.googleapis.com/maps/api/geocode/json?latlng=$lat,$lng&key=AIzaSyDve8khUCBU0VKqx5NgTJiBDji9CAwyOW8');
     final response = await http.get(url);
+    print(response.body);
     final resdata = json.decode(response.body);
     final address = resdata['results'][0]['formatted_address'];
-
+    print(address);
 
     setState(() {
       pickedLocation = PlaceLocation(
@@ -85,21 +91,18 @@ class _LocationInputState extends State<LocationInput> {
   Widget build(BuildContext context) {
     Widget previewContent = const Text('no location chosen yet');
 
-
-    
-    if(pickedLocation != null){
+    if (pickedLocation != null) {
       previewContent = Image.network(
         locationImage,
         fit: BoxFit.cover,
         width: double.infinity,
+        height: double.infinity,
       );
     }
 
-    if(isGettingLocation){
+    if (isGettingLocation) {
       previewContent = const CircularProgressIndicator();
     }
-
-
 
     return Column(
       children: [
