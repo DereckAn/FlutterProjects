@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile_features/models/place.dart';
 import 'package:mobile_features/providers/user_places.dart';
-import 'package:mobile_features/widgets/location_input.dart';
+// import 'package:mobile_features/widgets/location_input.dart';
 import 'package:mobile_features/widgets/poner_imagen.dart';
 
 //recuerda cambiar el statefull widget por el consumer statefull widget para tener acceso a al provider
