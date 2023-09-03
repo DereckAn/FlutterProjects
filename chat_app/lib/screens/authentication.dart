@@ -8,7 +8,23 @@ class AuthenticationScreen extends StatefulWidget {
 }
 
 class _AuthenticationScreenState extends State<AuthenticationScreen> {
-  bool isLogin = false;
+
+  final formkey = GlobalKey<FormState>();
+  bool isLogin = true;
+  var enterEmail = '';
+  var enterPass = '';
+
+  void submit(){  
+    final isValid = formkey.currentState!.validate();
+    
+    if(isValid){
+      formkey.currentState!.save();
+    }
+    
+    print(enterEmail);
+    print(enterPass);
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -17,77 +33,95 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
       appBar: AppBar(
         title: const Text('Authentication'),
       ),
-      body: Form(
-        child: Center(
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  margin: const EdgeInsets.only(
-                    top: 30,
-                    bottom: 20,
-                    left: 20,
-                    right: 20,
-                  ),
-                  width: 200,
-                  child: Image.asset('assets/images/chat.png'),
+      body: Center(
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                margin: const EdgeInsets.only(
+                  top: 30,
+                  bottom: 20,
+                  left: 20,
+                  right: 20,
                 ),
-                Card(
-                  margin: const EdgeInsets.all(20),
-                  child: SingleChildScrollView(
-                    child: Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: Form(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            TextFormField(
-                              // ignore: prefer_const_constructors
-                              decoration: const InputDecoration(
-                                  labelText: 'Email Address'),
-                              keyboardType: TextInputType.emailAddress,
-                              autocorrect:
-                                  false, // esto es para desactivar la autocorrecion
-                              textCapitalization: TextCapitalization
-                                  .none, // para que la primera letra no se ponga como mayuscula.
-                            ),
-                            TextFormField(
-                              // ignore: prefer_const_constructors
-                              decoration:
-                                  const InputDecoration(labelText: 'Password'),
-                              obscureText:
-                                  true, // escodne los caracteres meintras el usuario ingresa la contrasena.
-                            ),
-                            const SizedBox(
-                              height: 12,
-                            ),
-                            ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                  backgroundColor: Theme.of(context)
-                                      .colorScheme
-                                      .primaryContainer),
-                              onPressed: () {},
-                              child: Text(isLogin ? 'Login' : 'Sign up'),
-                            ),
-                            TextButton(
-                              onPressed: () {
-                                setState(() {
-                                  isLogin = !isLogin;
-                                });
-                              },
-                              child: Text(isLogin
-                                  ? 'Create and account.'
-                                  : 'I already one'),
-                            ),
-                          ],
-                        ),
+                width: 200,
+                child: Image.asset('assets/images/chat.png'),
+              ),
+              Card(
+                margin: const EdgeInsets.all(20),
+                child: SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Form(
+                      key: formkey,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          TextFormField(
+                            // ignore: prefer_const_constructors
+                            decoration: const InputDecoration(
+                                labelText: 'Email Address'),
+                            keyboardType: TextInputType.emailAddress,
+                            autocorrect:
+                                false, // esto es para desactivar la autocorrecion
+                            textCapitalization: TextCapitalization.none,
+                            validator:
+                                (value) {
+                                  if(value == null || value.trim().isEmpty || !value.contains('@')){
+                                    return 'Enter a valid email';
+                                  }
+                                  return null;
+                                }, // para que la primera letra no se ponga como mayuscula.
+                                onSaved: (value){
+                                  enterEmail = value!;
+                                },
+                          ),
+                          TextFormField(
+                            // ignore: prefer_const_constructors
+                            decoration:
+                                const InputDecoration(labelText: 'Password'),
+                            obscureText:
+                                true, // escodne los caracteres meintras el usuario ingresa la contrasena.
+                            validator: (value) {
+                              if(value == null || value.trim().length < 6 ){
+                                    return 'Password must contain at least 6 characters ';
+                                  }
+                                  return null;
+                            },
+                            onSaved: (newValue) {
+                              enterPass = newValue!;
+                            },
+                          ),
+                          const SizedBox(
+                            height: 12,
+                          ),
+                          ElevatedButton(
+                            
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: Theme.of(context)
+                                    .colorScheme
+                                    .primaryContainer),
+                            onPressed: submit,
+                            child: Text(isLogin ? 'Login' : 'Sign up'),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              setState(() {
+                                isLogin = !isLogin;
+                              });
+                            },
+                            child: Text(isLogin
+                                ? 'Create and account.'
+                                : 'I already one'),
+                          ),
+                        ],
                       ),
                     ),
                   ),
-                )
-              ],
-            ),
+                ),
+              )
+            ],
           ),
         ),
       ),
