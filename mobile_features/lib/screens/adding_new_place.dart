@@ -33,7 +33,7 @@ class _AddingNewPlaceScreenState extends ConsumerState<AddingNewPlaceScreen> {
         selectedPicture == null
         // selectedLocation == null
         ) {
-          print('no se guardo nada');
+          // print('no se guardo nada');
       // si el titulo esta vacio no se guarda nada
       return;
     }

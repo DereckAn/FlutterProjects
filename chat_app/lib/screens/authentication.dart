@@ -21,8 +21,8 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
       formkey.currentState!.save();
     }
     
-    print(enterEmail);
-    print(enterPass);
+    // print(enterEmail);
+    // print(enterPass);
   }
 
 

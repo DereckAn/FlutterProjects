@@ -59,21 +59,21 @@ class _LocationInputState extends State<LocationInput> {
     final lng = locationData.longitude;
 
 
-    print(lat);
-    print(lng);
+    // print(lat);
+    // print(lng);
 
 
     if (lat == null || lng == null) {
-      print('algo esta siendo null');
+      // print('algo esta siendo null');
       return;
     }
 
     final url = Uri.parse('https://maps.googleapis.com/maps/api/geocode/json?latlng=$lat,$lng&key=AIzaSyDve8khUCBU0VKqx5NgTJiBDji9CAwyOW8');
     final response = await http.get(url);
-    print(response.body);
+    // print(response.body); // Cheac esto. Esta es la razon por la que no funcionaba la llamada de datos 
     final resdata = json.decode(response.body);
     final address = resdata['results'][0]['formatted_address'];
-    print(address);
+    // print(address);
 
     setState(() {
       pickedLocation = PlaceLocation(
@@ -106,7 +106,7 @@ class _LocationInputState extends State<LocationInput> {
 
     return Column(
       children: [
-        Container(
+        SizedBox(
           height: 170,
           width: double.infinity,
           child: previewContent,
