@@ -8,23 +8,22 @@ class AuthenticationScreen extends StatefulWidget {
 }
 
 class _AuthenticationScreenState extends State<AuthenticationScreen> {
-
   final formkey = GlobalKey<FormState>();
   bool isLogin = true;
   var enterEmail = '';
   var enterPass = '';
 
-  void submit(){  
+  void submit() {
     final isValid = formkey.currentState!.validate();
-    
-    if(isValid){
-      formkey.currentState!.save();
-    }
-    
-    // print(enterEmail);
-    // print(enterPass);
-  }
 
+    if (!isValid) {
+      return;
+    }
+
+    formkey.currentState!.save();
+    print(enterEmail);
+    print(enterPass);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,16 +65,17 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                             autocorrect:
                                 false, // esto es para desactivar la autocorrecion
                             textCapitalization: TextCapitalization.none,
-                            validator:
-                                (value) {
-                                  if(value == null || value.trim().isEmpty || !value.contains('@')){
-                                    return 'Enter a valid email';
-                                  }
-                                  return null;
-                                }, // para que la primera letra no se ponga como mayuscula.
-                                onSaved: (value){
-                                  enterEmail = value!;
-                                },
+                            validator: (value) {
+                              if (value == null ||
+                                  value.trim().isEmpty ||
+                                  !value.contains('@')) {
+                                return 'Enter a valid email';
+                              }
+                              return null;
+                            }, // para que la primera letra no se ponga como mayuscula.
+                            onSaved: (value) {
+                              enterEmail = value!;
+                            },
                           ),
                           TextFormField(
                             // ignore: prefer_const_constructors
@@ -84,10 +84,10 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                             obscureText:
                                 true, // escodne los caracteres meintras el usuario ingresa la contrasena.
                             validator: (value) {
-                              if(value == null || value.trim().length < 6 ){
-                                    return 'Password must contain at least 6 characters ';
-                                  }
-                                  return null;
+                              if (value == null || value.trim().length < 6) {
+                                return 'Password must contain at least 6 characters ';
+                              }
+                              return null;
                             },
                             onSaved: (newValue) {
                               enterPass = newValue!;
@@ -97,7 +97,6 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                             height: 12,
                           ),
                           ElevatedButton(
-                            
                             style: ElevatedButton.styleFrom(
                                 backgroundColor: Theme.of(context)
                                     .colorScheme
