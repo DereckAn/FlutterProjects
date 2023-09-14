@@ -4,6 +4,7 @@ import 'firebase_options.dart';
 import 'screens/authentication.dart';
 
 void main() async {
+  //Esta linea es para asegurar que se inicialize la app
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const App());
