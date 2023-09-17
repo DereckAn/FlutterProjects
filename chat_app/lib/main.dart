@@ -1,7 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'screens/authentication.dart';
+import 'screens/chat.dart';
 
 void main() async {
   //Esta linea es para asegurar que se inicialize la app
@@ -22,7 +24,15 @@ class App extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(
             seedColor: const Color.fromARGB(255, 63, 17, 177)),
       ),
-      home: const AuthenticationScreen(),
+      home: StreamBuilder( //Esto es para cambiar de pantalla si ya tenemos un usuario creado y logeado 
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return const ChatScreen();
+          }
+          return const AuthenticationScreen();
+        },
+      ),
     );
   }
 }
