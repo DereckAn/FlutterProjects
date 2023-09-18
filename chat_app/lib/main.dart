@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'screens/authentication.dart';
 import 'screens/chat.dart';
+import 'screens/splash.dart';
 
 void main() async {
   //Esta linea es para asegurar que se inicialize la app
@@ -27,6 +28,9 @@ class App extends StatelessWidget {
       home: StreamBuilder( //Esto es para cambiar de pantalla si ya tenemos un usuario creado y logeado 
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
+          if(snapshot.connectionState == ConnectionState.waiting) {
+            return const SplashScreen();
+          }
           if (snapshot.hasData) {
             return const ChatScreen();
           }
