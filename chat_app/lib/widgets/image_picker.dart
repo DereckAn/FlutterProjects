@@ -1,13 +1,31 @@
-import 'package:flutter/material.dart';
+import 'dart:io';
 
-class ImagePicker extends StatefulWidget {
-  const ImagePicker({super.key});
+import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+
+class UserImagePicker extends StatefulWidget {
+  const UserImagePicker({super.key});
 
   @override
-  State<ImagePicker> createState() => _ImagePickerState();
+  State<UserImagePicker> createState() => _UserImagePickerState();
 }
 
-class _ImagePickerState extends State<ImagePicker> {
+class _UserImagePickerState extends State<UserImagePicker> {
+  File? pickedImageFile;
+
+  void imagePicker() async {
+    final pickedImage = await ImagePicker()
+        .pickImage(source: ImageSource.camera, imageQuality: 50, maxWidth: 150);
+
+    if (pickedImage == null) {
+      return;
+    }
+
+    setState(() {
+      pickedImageFile = File(pickedImage!.path);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -15,7 +33,7 @@ class _ImagePickerState extends State<ImagePicker> {
         const CircleAvatar(
           radius: 40,
           backgroundColor: Colors.grey,
-          foregroundImage: null,
+          foregroundImage: FileImage(file),
         ),
         TextButton.icon(
           onPressed: () {},
