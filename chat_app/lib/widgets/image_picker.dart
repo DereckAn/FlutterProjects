@@ -22,7 +22,7 @@ class _UserImagePickerState extends State<UserImagePicker> {
     }
 
     setState(() {
-      pickedImageFile = File(pickedImage!.path);
+      pickedImageFile = File(pickedImage.path);
     });
   }
 
@@ -30,18 +30,18 @@ class _UserImagePickerState extends State<UserImagePicker> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const CircleAvatar(
+        CircleAvatar(
           radius: 40,
           backgroundColor: Colors.grey,
-          foregroundImage: FileImage(file),
+          foregroundImage: pickedImageFile != null ? FileImage(pickedImageFile!) : null,
         ),
         TextButton.icon(
-          onPressed: () {},
+          onPressed: imagePicker,
           icon: const Icon(Icons.image),
           label: Text(
             'Add Image',
             style: TextStyle(
-              color: Theme.of(context).primaryColor,
+              color: Theme.of(context).colorScheme.primary,
             ),
           ),
         )

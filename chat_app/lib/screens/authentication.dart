@@ -1,3 +1,4 @@
+import 'package:chat_app/widgets/image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart'; //pakete para crear usuarios
 
@@ -29,28 +30,27 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
     print(enterPass);
 
     if (isLogin) {
-      try{
-      final userCredentials = await _fireBase.signInWithEmailAndPassword(
-          email: enterEmail, password: enterPass);
-          print(userCredentials);
-          print('you are logged in');
-      // Log user in
-
-      } on FirebaseAuthException catch(error){
+      try {
+        final userCredentials = await _fireBase.signInWithEmailAndPassword(
+            email: enterEmail, password: enterPass);
+        print(userCredentials);
+        print('you are logged in');
+        // Log user in
+      } on FirebaseAuthException catch (error) {
         ScaffoldMessenger.of(context).clearSnackBars();
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(error.message ?? 'Authentication failed'),
           ),
         );
-
       }
     } else {
       try {
-        final userCredentails = await _fireBase.createUserWithEmailAndPassword( //Crear usuario
-            email: enterEmail, password: enterPass);
+        final userCredentails = await _fireBase.createUserWithEmailAndPassword(
+            //Crear usuario
+            email: enterEmail,
+            password: enterPass);
         print(userCredentails);
-
       } on FirebaseAuthException catch (error) {
         if (error.code == 'email-already-in-use') {
           //...
@@ -98,6 +98,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
+                          if (!isLogin) const UserImagePicker(),
                           TextFormField(
                             // ignore: prefer_const_constructors
                             decoration: const InputDecoration(
