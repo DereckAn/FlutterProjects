@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 class UserImagePicker extends StatefulWidget {
-  const UserImagePicker({super.key});
+  const UserImagePicker({super.key, required this.imagePickFn});
+
+  final void Function(File pickedImage) imagePickFn; // Esta funcion es para manda la foto a la clase padre
 
   @override
   State<UserImagePicker> createState() => _UserImagePickerState();
@@ -24,6 +26,8 @@ class _UserImagePickerState extends State<UserImagePicker> {
     setState(() {
       pickedImageFile = File(pickedImage.path);
     });
+    //Con esta linea estamos teniendo acceso a la funcion imagePickFn y le estamos mandando la foto
+    widget.imagePickFn(pickedImageFile!); 
   }
 
   @override

@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:chat_app/widgets/image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart'; //pakete para crear usuarios
 
@@ -16,11 +19,18 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
   bool isLogin = true;
   var enterEmail = '';
   var enterPass = '';
+  File? userImageFile;
 
   void submit() async {
     final isValid = formkey.currentState!.validate();
 
-    if (!isValid) {
+    if (!isValid || !isLogin && userImageFile == null) {
+      ScaffoldMessenger.of(context).clearSnackBars();
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Please pick an image'),
+        ),
+      );
       return;
     }
 
@@ -50,7 +60,18 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
             //Crear usuario
             email: enterEmail,
             password: enterPass);
-        print(userCredentails);
+        // print(userCredentails);
+
+        // Con esta linea estamos creando una variable con el path de firebase que tendra la imagen
+        final storageRef = FirebaseStorage.instance
+            .ref()
+            .child('user_image')
+            .child('${userCredentails.user!.uid}.jpg');
+
+        // Con esta linea estamos subiendo la imagen a firebase
+        await storageRef.putFile(userImageFile!);
+        final imageURL = await storageRef.getDownloadURL();
+        print(imageURL);
       } on FirebaseAuthException catch (error) {
         if (error.code == 'email-already-in-use') {
           //...
@@ -98,7 +119,11 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          if (!isLogin) const UserImagePicker(),
+                          if (!isLogin)
+                            UserImagePicker(
+                              imagePickFn: (pickedImage) =>
+                                  userImageFile = pickedImage,
+                            ),
                           TextFormField(
                             // ignore: prefer_const_constructors
                             decoration: const InputDecoration(
