@@ -20,6 +20,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
   var enterEmail = '';
   var enterPass = '';
   File? userImageFile;
+  var isAuthenticating = false;
 
   void submit() async {
     final isValid = formkey.currentState!.validate();
@@ -38,6 +39,10 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
 
     print(enterEmail);
     print(enterPass);
+
+    setState(() {
+      isAuthenticating = true;
+    });
 
     if (isLogin) {
       try {
@@ -82,6 +87,9 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
             content: Text(error.message ?? 'Authentication failed'),
           ),
         );
+        setState(() {
+          isAuthenticating = false;
+        });
       }
       // Sign user up
     }
@@ -163,24 +171,28 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                           const SizedBox(
                             height: 12,
                           ),
-                          ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                backgroundColor: Theme.of(context)
-                                    .colorScheme
-                                    .primaryContainer),
-                            onPressed: submit,
-                            child: Text(isLogin ? 'Login' : 'Sign up'),
-                          ),
-                          TextButton(
-                            onPressed: () {
-                              setState(() {
-                                isLogin = !isLogin;
-                              });
-                            },
-                            child: Text(isLogin
-                                ? 'Create an account.'
-                                : 'I already one'),
-                          ),
+                          if (isAuthenticating)
+                            const CircularProgressIndicator(),
+                          if (!isAuthenticating)
+                            ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  backgroundColor: Theme.of(context)
+                                      .colorScheme
+                                      .primaryContainer),
+                              onPressed: submit,
+                              child: Text(isLogin ? 'Login' : 'Sign up'),
+                            ),
+                          if (!isAuthenticating)
+                            TextButton(
+                              onPressed: () {
+                                setState(() {
+                                  isLogin = !isLogin;
+                                });
+                              },
+                              child: Text(isLogin
+                                  ? 'Create an account.'
+                                  : 'I already one'),
+                            ),
                         ],
                       ),
                     ),
