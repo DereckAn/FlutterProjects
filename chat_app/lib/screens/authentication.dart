@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:chat_app/widgets/image_picker.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart'; //pakete para crear usuarios
@@ -76,7 +77,22 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
         // Con esta linea estamos subiendo la imagen a firebase
         await storageRef.putFile(userImageFile!);
         final imageURL = await storageRef.getDownloadURL();
-        print(imageURL);
+        // print(imageURL);
+
+        // Con esta instancia podemos hablar con firebase. Para upload and fetch data.
+        // firebase trabaja con collections. Aqui estamos hablando con una collection llamada users. En dado caso que no  ---->  .collection()
+        // exista la collection users, firebase la creara automaticamente.
+        // Dentro de estas collecion agregaremos un documento con el id del usuario.   ---> .doc(userCredentails.user!.uid)
+        //Ahora solo necesitamos decirle a firebase que data sera guardada en el documento  ---> .set(data)
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(userCredentails.user!.uid)
+            .set({
+          'username': 'username',
+          'email': enterEmail,
+          'image_url': imageURL,
+        });
+        
       } on FirebaseAuthException catch (error) {
         if (error.code == 'email-already-in-use') {
           //...

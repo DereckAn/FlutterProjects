@@ -41,6 +41,30 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.1"
+  cloud_firestore:
+    dependency: "direct main"
+    description:
+      name: cloud_firestore
+      sha256: "50e1ffa143fc5c49db1800392f8d9524fd015f9d26a9e4fc01b5ddb1e603e01b"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.9.2"
+  cloud_firestore_platform_interface:
+    dependency: transitive
+    description:
+      name: cloud_firestore_platform_interface
+      sha256: "150e603a40d52b3199e46b1e38d9f8ef8c2dee9e1fb2122d58d456c50015bf7c"
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.16.1"
+  cloud_firestore_web:
+    dependency: transitive
+    description:
+      name: cloud_firestore_web
+      sha256: f033aef13b13f94b0f361898df39307d8710859c8912626cfb08e439e350bd66
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.7.1"
   collection:
     dependency: transitive
     description:
@@ -109,26 +133,26 @@ packages:
     dependency: "direct main"
     description:
       name: firebase_auth
-      sha256: "6d9be853426ab686d68076b8007ac29b2c31e7d549444a45b5c3fe1abc249fb0"
+      sha256: e7b7e2a08888cb8ef073a9b6d4df9039ea0ff07c920d4258fb4886c55fe2dbb6
       url: "https://pub.dev"
     source: hosted
-    version: "4.9.0"
+    version: "4.10.0"
   firebase_auth_platform_interface:
     dependency: transitive
     description:
       name: firebase_auth_platform_interface
-      sha256: "2946cfdc17f925fa9771dd0ba3ce9dd2d019100a8685d0557c161f7786ea9b14"
+      sha256: "4862bd649268e32ebd685a58abe1eb7ef13aef3f668ce9c56a7d283c971ec6ff"
       url: "https://pub.dev"
     source: hosted
-    version: "6.18.0"
+    version: "6.19.0"
   firebase_auth_web:
     dependency: transitive
     description:
       name: firebase_auth_web
-      sha256: d8972d754702a3f4881184706b8056e2837d0dae91613a43b988c960b8e0d988
+      sha256: "090d531cc0dcf1e39edc0d64cffa18ccc5745b1fd1081a13ee1bf42d861ff764"
       url: "https://pub.dev"
     source: hosted
-    version: "5.8.0"
+    version: "5.8.1"
   firebase_core:
     dependency: "direct main"
     description:
@@ -236,10 +260,10 @@ packages:
     dependency: transitive
     description:
       name: image_picker_android
-      sha256: "47da2161c2e9f8f8a9cbbd89d466d174333fbdd769aeed848912e0b16d9cb369"
+      sha256: "0c7b83bbe2980c8a8e36e974f055e11e51675784e13a4762889feed0f3937ff2"
       url: "https://pub.dev"
     source: hosted
-    version: "0.8.8"
+    version: "0.8.8+1"
   image_picker_for_web:
     dependency: transitive
     description:
