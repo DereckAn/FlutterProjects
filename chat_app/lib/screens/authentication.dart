@@ -22,6 +22,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
   var enterPass = '';
   File? userImageFile;
   var isAuthenticating = false;
+  var enterUsername = '';
 
   void submit() async {
     final isValid = formkey.currentState!.validate();
@@ -38,8 +39,8 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
 
     formkey.currentState!.save();
 
-    print(enterEmail);
-    print(enterPass);
+    // print(enterEmail);
+    // print(enterPass);
 
     setState(() {
       isAuthenticating = true;
@@ -88,11 +89,10 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
             .collection('users')
             .doc(userCredentails.user!.uid)
             .set({
-          'username': 'username',
+          'username': enterUsername,
           'email': enterEmail,
           'image_url': imageURL,
         });
-        
       } on FirebaseAuthException catch (error) {
         if (error.code == 'email-already-in-use') {
           //...
@@ -168,6 +168,26 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                               enterEmail = value!;
                             },
                           ),
+                          // Este textformfield sera para guardar el username
+                          if (!isLogin)
+                            TextFormField(
+                              decoration:
+                                  const InputDecoration(labelText: 'Username'),
+                              enableSuggestions: false,
+                              textCapitalization: TextCapitalization.none,
+                              validator: (value) {
+                                if (value == null ||
+                                    value.isEmpty ||
+                                    value.trim().length < 4) {
+                                  return 'Please enter a valid username with at least 4 characters';
+                                }
+                                return null;
+                              },
+                              onSaved: (newValue) {
+                                enterUsername = newValue!;
+                              },
+                            ),
+
                           TextFormField(
                             // ignore: prefer_const_constructors
                             decoration:
