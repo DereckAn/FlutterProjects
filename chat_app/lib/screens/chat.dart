@@ -15,10 +15,17 @@ class _ChatScreenState extends State<ChatScreen> {
   void setupNotification() async {
     final firebase = FirebaseMessaging.instance;
     await firebase.requestPermission();
-    // note Esto es para tener la direccion del dispositivo 
+    // note Esto es para tener la direccion del dispositivo
     // note Necesitamos esta direccion para poder enviar notificaciones a un dispositivo en especifico
-    final token = await firebase.getToken(); 
-    print(token); // Podemos mandar este token a una base de datos via http or firebase sdk
+    final token = await firebase.getToken();
+    print(
+        token); // Podemos mandar este token a una base de datos via http or firebase sdk
+
+    // This will recibe a push notificacion 
+    // when ever we sent a new notification to that chat topic 
+    // with firebase we can send ntofiicacion thou that topic 
+    // Creo que es como crear un grupo donde todos los que estan en 'chat' recibiran ntoificaciones
+    firebase.subscribeToTopic('chat');
   }
 
   // note NO pongas async en el initState. No es recomendable porque es un metodo interno the flutter
